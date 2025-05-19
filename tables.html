@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaCo - Tables</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #047857;
+            --secondary-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0ea5e9;
+            --background-color: #ecfdf5;
+            --card-bg: #fefce8;
+            --card-secondary-bg: #d4f4e2;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --neon-glow: #6ee7b7;
+            --card-border: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, var(--background-color), #047857);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            width: 260px;
+            background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
+            box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem 1.5rem;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--card-border);
+        }
+
+        .sidebar-header h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .sidebar-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .sidebar-item:hover {
+            background-color: var(--card-secondary-bg);
+            color: var(--primary-color);
+            transform: translateX(-5px);
+            box-shadow: 0 0 10px var(--neon-glow);
+            text-decoration: none;
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(to right, var(--card-secondary-bg), var(--neon-glow));
+            color: var(--text-primary);
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
+        }
+
+        .sidebar-item i {
+            width: 30px;
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-right: 260px;
+            padding: 2rem;
+        }
+
+        .table-container {
+            background: linear-gradient(145deg, var(--card-bg), var(--card-secondary-bg));
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .table-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .table {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+            border: none;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(4, 120, 87, 0.05);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .status-pending {
+            background-color: var(--warning-color);
+            color: white;
+        }
+
+        .status-inactive {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .action-btn {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            color: var(--primary-color);
+            background-color: rgba(4, 120, 87, 0.1);
+        }
+
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-box input {
+            padding-left: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>PharmaCo</h2>
+        </div>
+        <a href="home.html" class="sidebar-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="medicine-list.html" class="sidebar-item">
+            <i class="fas fa-pills"></i>
+            <span>Medicine List</span>
+        </a>
+        <a href="dashboards.html" class="sidebar-item">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboards</span>
+        </a>
+        <a href="tables.html" class="sidebar-item active">
+            <i class="fas fa-table"></i>
+            <span>Tables</span>
+        </a>
+        <a href="update.html" class="sidebar-item">
+            <i class="fas fa-edit"></i>
+            <span>Update</span>
+        </a>
+        <a href="contact.html" class="sidebar-item">
+            <i class="fas fa-address-book"></i>
+            <span>Contact Details</span>
+        </a>
+        <a href="index.html" class="sidebar-item">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Medicines Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <h2 class="table-title">Medicines</h2>
+                <div class="table-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="form-control" placeholder="Search medicines...">
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Add Medicine
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Supplier</th>
+                            <th>Stock</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MED001</td>
+                            <td>Paracetamol 500mg</td>
+                            <td>Tablet</td>
+                            <td>MedSupply Co.</td>
+                            <td>500</td>
+                            <td>₹50</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                                <a href="#" class="action-btn"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>MED002</td>
+                            <td>Amoxicillin 250mg</td>
+                            <td>Capsule</td>
+                            <td>PharmaTech Ltd.</td>
+                            <td>20</td>
+                            <td>₹75</td>
+                            <td><span class="status-badge status-pending">Low Stock</span></td>
+                            <td>
+                                <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                                <a href="#" class="action-btn"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <nav class="mt-3">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Suppliers Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <h2 class="table-title">Suppliers</h2>
+                <div class="table-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="form-control" placeholder="Search suppliers...">
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Add Supplier
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Contact Person</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SUP001</td>
+                            <td>MedSupply Co.</td>
+                            <td>John Smith</td>
+                            <td>john@medsupply.com</td>
+                            <td>+91 9876543210</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                                <a href="#" class="action-btn"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SUP002</td>
+                            <td>PharmaTech Ltd.</td>
+                            <td>Sarah Johnson</td>
+                            <td>sarah@pharmatech.com</td>
+                            <td>+91 9876543211</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <a href="#" class="action-btn"><i class="fas fa-edit"></i></a>
+                                <a href="#" class="action-btn"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <nav class="mt-3">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

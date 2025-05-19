@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaCo - Herbal Library</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #047857;
+            --secondary-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0ea5e9;
+            --background-color: #ecfdf5;
+            --card-bg: #fefce8;
+            --card-secondary-bg: #d4f4e2;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --neon-glow: #6ee7b7;
+            --card-border: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, var(--background-color), #047857);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            width: 260px;
+            background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
+            box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem 1.5rem;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--card-border);
+        }
+
+        .sidebar-header h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .sidebar-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .sidebar-item:hover {
+            background-color: var(--card-secondary-bg);
+            color: var(--primary-color);
+            transform: translateX(-5px);
+            box-shadow: 0 0 10px var(--neon-glow);
+            text-decoration: none;
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(to right, var(--card-secondary-bg), var(--neon-glow));
+            color: var(--text-primary);
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
+        }
+
+        .sidebar-item i {
+            width: 30px;
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-right: 260px;
+            padding: 2rem;
+        }
+
+        .herb-card {
+            background: linear-gradient(145deg, var(--card-bg), var(--card-secondary-bg));
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .herb-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .herb-card h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .herb-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .herb-properties {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .property-badge {
+            background: var(--card-secondary-bg);
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .search-bar {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 25px;
+            padding: 0.75rem 1.5rem;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--neon-glow);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>PharmaCo</h2>
+        </div>
+        <a href="home.html" class="sidebar-item">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="research.html" class="sidebar-item">
+            <i class="fas fa-flask"></i>
+            <span>Research</span>
+        </a>
+        <a href="herbal-library.html" class="sidebar-item active">
+            <i class="fas fa-leaf"></i>
+            <span>Herbal Library</span>
+        </a>
+        <a href="analytics.html" class="sidebar-item">
+            <i class="fas fa-chart-line"></i>
+            <span>Analytics</span>
+        </a>
+        <a href="team.html" class="sidebar-item">
+            <i class="fas fa-users"></i>
+            <span>Team</span>
+        </a>
+        <a href="settings.html" class="sidebar-item">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
+        <a href="index.html" class="sidebar-item">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Herbal Library</h1>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-primary active">
+                    <i class="fas fa-th-large"></i>
+                </button>
+                <button type="button" class="btn btn-outline-primary">
+                    <i class="fas fa-list"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text bg-white">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" class="form-control search-bar" placeholder="Search herbs...">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <select class="form-control" id="propertyFilter">
+                    <option value="">Filter by Property</option>
+                    <option value="anti-inflammatory">Anti-inflammatory</option>
+                    <option value="antioxidant">Antioxidant</option>
+                    <option value="immune-support">Immune Support</option>
+                    <option value="adaptogen">Adaptogen</option>
+                    <option value="digestive">Digestive Aid</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="herb-card">
+                    <img src="https://via.placeholder.com/400x200" alt="Turmeric" class="herb-image">
+                    <h3>Turmeric (Curcuma longa)</h3>
+                    <div class="herb-properties">
+                        <span class="property-badge">Anti-inflammatory</span>
+                        <span class="property-badge">Antioxidant</span>
+                        <span class="property-badge">Immune Support</span>
+                    </div>
+                    <p>Known for its powerful anti-inflammatory and antioxidant properties. Contains curcumin, which has been studied for various health benefits.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="herb-card">
+                    <img src="https://via.placeholder.com/400x200" alt="Ashwagandha" class="herb-image">
+                    <h3>Ashwagandha (Withania somnifera)</h3>
+                    <div class="herb-properties">
+                        <span class="property-badge">Adaptogen</span>
+                        <span class="property-badge">Stress Relief</span>
+                        <span class="property-badge">Energy</span>
+                    </div>
+                    <p>An adaptogenic herb that helps the body manage stress. Traditionally used to support energy levels and overall well-being.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="herb-card">
+                    <img src="https://via.placeholder.com/400x200" alt="Ginger" class="herb-image">
+                    <h3>Ginger (Zingiber officinale)</h3>
+                    <div class="herb-properties">
+                        <span class="property-badge">Digestive Aid</span>
+                        <span class="property-badge">Anti-nausea</span>
+                        <span class="property-badge">Anti-inflammatory</span>
+                    </div>
+                    <p>Widely used for digestive support and nausea relief. Contains gingerol, a compound with potent anti-inflammatory properties.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="herb-card">
+                    <img src="https://via.placeholder.com/400x200" alt="Echinacea" class="herb-image">
+                    <h3>Echinacea (Echinacea purpurea)</h3>
+                    <div class="herb-properties">
+                        <span class="property-badge">Immune Support</span>
+                        <span class="property-badge">Antiviral</span>
+                        <span class="property-badge">Antibacterial</span>
+                    </div>
+                    <p>Popular herb for immune system support. Contains compounds that may help fight viral and bacterial infections.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

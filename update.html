@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaCo - Update</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #047857;
+            --secondary-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0ea5e9;
+            --background-color: #ecfdf5;
+            --card-bg: #fefce8;
+            --card-secondary-bg: #d4f4e2;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --neon-glow: #6ee7b7;
+            --card-border: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, var(--background-color), #047857);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            width: 260px;
+            background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
+            box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem 1.5rem;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--card-border);
+        }
+
+        .sidebar-header h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .sidebar-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .sidebar-item:hover {
+            background-color: var(--card-secondary-bg);
+            color: var(--primary-color);
+            transform: translateX(-5px);
+            box-shadow: 0 0 10px var(--neon-glow);
+            text-decoration: none;
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(to right, var(--card-secondary-bg), var(--neon-glow));
+            color: var(--text-primary);
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
+        }
+
+        .sidebar-item i {
+            width: 30px;
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-right: 260px;
+            padding: 2rem;
+        }
+
+        .form-container {
+            background: linear-gradient(145deg, var(--card-bg), var(--card-secondary-bg));
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--card-border);
+        }
+
+        .form-label {
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(4, 120, 87, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.2);
+        }
+
+        .form-select {
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(4, 120, 87, 0.25);
+        }
+
+        .required-field::after {
+            content: "*";
+            color: var(--danger-color);
+            margin-left: 4px;
+        }
+
+        .form-text {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>PharmaCo</h2>
+        </div>
+        <a href="home.html" class="sidebar-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="medicine-list.html" class="sidebar-item">
+            <i class="fas fa-pills"></i>
+            <span>Medicine List</span>
+        </a>
+        <a href="dashboards.html" class="sidebar-item">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboards</span>
+        </a>
+        <a href="tables.html" class="sidebar-item">
+            <i class="fas fa-table"></i>
+            <span>Tables</span>
+        </a>
+        <a href="update.html" class="sidebar-item active">
+            <i class="fas fa-edit"></i>
+            <span>Update</span>
+        </a>
+        <a href="contact.html" class="sidebar-item">
+            <i class="fas fa-address-book"></i>
+            <span>Contact Details</span>
+        </a>
+        <a href="index.html" class="sidebar-item">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Medicine Update Form -->
+        <div class="form-container">
+            <h2 class="form-title">Update Medicine</h2>
+            <form id="medicineUpdateForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="medicineId" class="form-label required-field">Medicine ID</label>
+                        <input type="text" class="form-control" id="medicineId" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="medicineName" class="form-label required-field">Medicine Name</label>
+                        <input type="text" class="form-control" id="medicineName" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="medicineType" class="form-label required-field">Type</label>
+                        <select class="form-select" id="medicineType" required>
+                            <option value="">Select Type</option>
+                            <option value="tablet">Tablet</option>
+                            <option value="capsule">Capsule</option>
+                            <option value="syrup">Syrup</option>
+                            <option value="injection">Injection</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="supplier" class="form-label required-field">Supplier</label>
+                        <select class="form-select" id="supplier" required>
+                            <option value="">Select Supplier</option>
+                            <option value="SUP001">MedSupply Co.</option>
+                            <option value="SUP002">PharmaTech Ltd.</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="stock" class="form-label required-field">Stock</label>
+                        <input type="number" class="form-control" id="stock" min="0" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="price" class="form-label required-field">Price (₹)</label>
+                        <input type="number" class="form-control" id="price" min="0" step="0.01" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="status" class="form-label required-field">Status</label>
+                        <select class="form-select" id="status" required>
+                            <option value="">Select Status</option>
+                            <option value="active">Active</option>
+                            <option value="low_stock">Low Stock</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" rows="3"></textarea>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Update Medicine
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Supplier Update Form -->
+        <div class="form-container">
+            <h2 class="form-title">Update Supplier</h2>
+            <form id="supplierUpdateForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="supplierId" class="form-label required-field">Supplier ID</label>
+                        <input type="text" class="form-control" id="supplierId" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="supplierName" class="form-label required-field">Company Name</label>
+                        <input type="text" class="form-control" id="supplierName" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="contactPerson" class="form-label required-field">Contact Person</label>
+                        <input type="text" class="form-control" id="contactPerson" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label required-field">Email</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="phone" class="form-label required-field">Phone</label>
+                        <input type="tel" class="form-control" id="phone" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="status" class="form-label required-field">Status</label>
+                        <select class="form-select" id="status" required>
+                            <option value="">Select Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea class="form-control" id="address" rows="3"></textarea>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Update Supplier
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Form validation and submission handling
+        document.getElementById('medicineUpdateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Medicine updated successfully!');
+        });
+
+        document.getElementById('supplierUpdateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Supplier updated successfully!');
+        });
+    </script>
+</body>
+</html> 
