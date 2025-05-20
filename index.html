@@ -11,462 +11,603 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #047857;
-            --secondary-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --info-color: #0ea5e9;
-            --background-color: #ecfdf5;
-            --card-bg: #fefce8;
-            --card-secondary-bg: #d4f4e2;
-            --text-primary: #1f2937;
-            --text-secondary: #4b5563;
-            --neon-glow: #6ee7b7;
-            --card-border: #10b981;
-            --bulletin-bg: #d4f4e2;
-        }
+       :root {
+    --primary-color: #047857;
+    --secondary-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --info-color: #0ea5e9;
+    --background-color: #ecfdf5;
+    --card-bg: #fefce8;
+    --card-secondary-bg: #d4f4e2;
+    --text-primary: #1f2937;
+    --text-secondary: #4b5563;
+    --neon-glow: #6ee7b7;
+    --card-border: #10b981;
+}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(180deg, var(--background-color), #047857);
-            color: var(--text-primary);
-            line-height: 1.6;
-            margin: 0;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        /* Hero Section with Slideshow */
-        .hero-section {
-            position: relative;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-        .hero-content {
-            z-index: 1;
-            color: #ffffff;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-            background: rgba(0, 0, 0, 0.3); /* Semi-transparent background for contrast */
-            padding: 1.5rem;
-            border-radius: 10px;
-        }
-        .hero-content h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: 1px;
-        }
-        .hero-content p {
-            font-size: 1.25rem;
-            font-weight: 400;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        .hero-content .btn {
-            background: linear-gradient(45deg, var(--primary-color), var(--info-color));
-            border: none;
-            padding: 0.75rem 2rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-        }
-        .hero-content .btn:hover {
-            box-shadow: 0 0 20px var(--neon-glow);
-            transform: translateY(-3px);
-        }
-        .carousel {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-        .carousel-item img {
-            width: 100%;
-            height: 100vh;
-            object-fit: cover;
-            filter: brightness(0.8);
-        }
-        .carousel-caption {
-            bottom: 10px;
-            right: 10px;
-            left: auto;
-            text-align: right;
-            width: 50%;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-        }
-        .carousel-caption h5 {
-            font-size: 2rem;
-            font-weight: 600;
-            text-shadow: 0 0 5px var(--neon-glow);
-        }
-        .carousel-caption p {
-            font-size: 1.2rem;
-            font-weight: 400;
-        }
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(180deg, var(--background-color), #047857);
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-x: hidden;
+}
 
-        /* Sidebar Navigation */
-        .sidebar {
-            position: fixed;
-            right: -260px;
-            top: 0;
-            height: 100vh;
-            width: 260px;
-            background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
-            box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
-            padding: 2rem 1.5rem;
-            z-index: 100;
-            transition: right 0.5s ease, opacity 0.5s ease;
-            opacity: 0;
-        }
-        .sidebar.show {
-            right: 0;
-            opacity: 1;
-        }
-        .sidebar-item {
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.75rem;
-            border-radius: 8px;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-        .sidebar-item:hover {
-            background-color: var(--card-secondary-bg);
-            color: var(--primary-color);
-            transform: translateX(-5px);
-            box-shadow: 0 0 10px var(--neon-glow);
-            text-decoration: none;
-        }
-        .sidebar-item.active {
-            background: linear-gradient(to right, var(--card-secondary-bg), var(--neon-glow));
-            color: var(--text-primary);
-            font-weight: 600;
-            box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
-            text-decoration: none;
-        }
-        .sidebar-item i {
-            width: 30px;
-            font-size: 1.2rem;
-        }
-        .sidebar-item span {
-            text-decoration: none;
-        }
+/* Hero Section with Slideshow */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
 
-        /* Main Content */
-        .main-content {
-            margin-right: 260px;
-            padding: 2rem;
-            transition: margin 0.3s ease;
-        }
+.hero-content {
+    z-index: 1;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    border-radius: 10px;
+    max-width: 90%;
+}
 
-        /* Futuristic Card Styling */
-        .futuristic-card {
-            background: linear-gradient(145deg, var(--card-bg), var(--card-secondary-bg));
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .futuristic-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--info-color));
-            opacity: 0.8;
-        }
-        .futuristic-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 15px var(--neon-glow);
-        }
+.hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
 
-        /* Section Titles */
-        .section-title {
-            font-weight: 700;
-            font-size: 1.8rem;
-            color: var(--text-primary);
-            text-shadow: 0 0 10px var(--neon-glow);
-            position: relative;
-            display: inline-block;
-        }
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            width: 50%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-color), var(--info-color));
-            transform: translateX(-50%);
-        }
+.hero-content p {
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
 
-        /* Internal Bulletin Section */
-        .bulletin-section {
-            background: var(--bulletin-bg);
-            padding: 3rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-        .bulletin-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(110, 231, 183, 0.2), transparent 70%);
-            z-index: -1;
-        }
-        .notice-list .notification-item {
-            border-left: 5px solid transparent;
-            padding: 1.25rem;
-            transition: all 0.3s ease;
-            background: rgba(254, 252, 232, 0.95);
-            margin-bottom: 0.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        .notice-list .notification-item:hover {
-            background: linear-gradient(to right, var(--card-secondary-bg), var(--neon-glow));
-            transform: translateX(5px);
-            box-shadow: 0 6px 20px var(--neon-glow);
-        }
-        .notification-danger { border-left-color: var(--danger-color); }
-        .notification-warning { border-left-color: var(--warning-color); }
-        .notification-info { border-left-color: var(--info-color); }
-        .notification-item .badge {
-            font-size: 0.8rem;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-        }
+.hero-content .btn {
+    background: linear-gradient(45deg, var(--primary-color), var(--info-color));
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
 
-        /* Supplier Carousel */
-        .partner-carousel {
-            position: relative;
-            height: 160px;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-        .partner-carousel-inner {
-            display: inline-flex;
-            animation: marquee 30s linear infinite;
-            will-change: transform;
-        }
-        .partner-carousel-inner:hover {
-            animation-play-state: paused;
-        }
-        .partner-item {
-            display: inline-flex;
-            align-items: center;
-            padding: 1rem;
-            margin-right: 1.5rem;
-            margin-top: 10px;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 320px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
-        }
-        .partner-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 0 15px var(--neon-glow);
-            border: 1px solid var(--secondary-color);
-        }
-        .partner-logo {
-            width: 80px;
-            height: auto;
-            margin-right: 1.25rem;
-            object-fit: contain;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-        }
-        .partner-item:hover .partner-logo {
-            transform: scale(1.1);
-        }
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+.hero-content .btn:hover {
+    box-shadow: 0 0 20px var(--neon-glow);
+    transform: translateY(-3px);
+}
 
-        /* Services Cards */
-        .service-card .card-body {
-            padding: 2rem;
-            text-align: center;
-        }
-        .service-card i {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--info-color);
-            text-shadow: 0 0 10px var(--neon-glow);
-        }
+.carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
 
-        /* Certifications */
-        .certification-card {
-            background: linear-gradient(145deg, var(--card-bg), var(--card-secondary-bg));
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-            padding: 1.5rem;
-        }
-        .certification-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--info-color));
-            opacity: 0.8;
-        }
-        .certification-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 15px var(--neon-glow);
-        }
-        .certification-card h5 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            text-shadow: 0 0 5px var(--neon-glow);
-            margin: 0;
-        }
+.carousel-item img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    filter: brightness(0.8);
+}
 
-        /* News Cards */
-        .news-card .card-body {
-            padding: 1.5rem;
-        }
-        .news-card .card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        .news-card .card-text {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-        .news-card a {
-            background: linear-gradient(45deg, var(--primary-color), var(--info-color));
-            color: white;
-            border-radius: 25px;
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        .news-card a:hover {
-            box-shadow: 0 0 15px var(--neon-glow);
-        }
-        .news-card .card-footer {
-            padding: 0.75rem;
-            text-align: center;
-            background: transparent;
-        }
+.carousel-caption {
+    bottom: 15px;
+    right: 15px;
+    left: auto;
+    text-align: left;
+    max-width: 60%;
+    padding: 15px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    white-space: normal;
+    box-sizing: border-box;
+}
 
-        /* Team Cards */
-        .team-img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border: 3px solid var(--neon-glow);
-            box-shadow: 0 0 15px var(--neon-glow);
-            transition: box-shadow 0.3s ease;
-        }
-        .team-img:hover {
-            box-shadow: 0 0 20px var(--neon-glow);
-        }
+.carousel-caption h5 {
+    font-size: 2rem;
+    font-weight: 600;
+    text-shadow: 0 0 5px var(--neon-glow);
+    margin-bottom: 0.5rem;
+}
 
-        /* Footer */
-        .footer {
-            background: linear-gradient(180deg, #047857, #065f46);
-            color: #f7fee7;
-            padding: 3rem 0;
-            border-top: 1px solid rgba(110, 231, 183, 0.2);
-        }
-        .footer a {
-            color: var(--neon-glow);
-            transition: color 0.3s ease;
-            text-decoration: none;
-        }
-        .footer a:hover {
-            color: var(--info-color);
-        }
+.carousel-caption p {
+    font-size: 1.2rem;
+    font-weight: 400;
+}
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-in {
-            animation: fadeIn 0.8s ease forwards;
-            opacity: 0;
-        }
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
-        .delay-4 { animation-delay: 0.8s; }
+/* Main Content */
+.main-content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-grow: 1;
+}
 
-        /* Responsive */
-        @media (max-width: 992px) {
-            .sidebar {
-                width: 80px;
-            }
-            .sidebar.show {
-                right: 0;
-                width: 80px;
-            }
-            .sidebar-text {
-                display: none;
-            }
-            .main-content {
-                margin-right: 80px;
-            }
-        }
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 0;
-                padding: 0;
-            }
-            .sidebar.show {
-                width: 220px;
-                padding: 2rem 1.5rem;
-            }
-            .main-content {
-                margin-right: 0;
-            }
-            .partner-item {
-                width: 280px;
-            }
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-            .hero-content p {
-                font-size: 1rem;
-            }
-            .carousel-caption {
-                width: 80%;
-            }
-            .carousel-caption h5 {
-                font-size: 1.5rem;
-            }
-            .carousel-caption p {
-                font-size: 1rem;
-            }
-        }
-    </style>
+/* Futuristic Card Styling */
+.futuristic-card {
+    background: linear-gradient(145deg, var(--card-bg), var(--card-secondary-bg));
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.futuristic-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+    opacity: 0.8;
+}
+
+.futuristic-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 15px var(--neon-glow);
+}
+
+/* About Section Specific Styling */
+.about-section .futuristic-card {
+    padding: 3rem;
+    max-width: 900px;
+}
+
+.about-section .section-title {
+    font-size: 2rem;
+}
+
+.about-section .lead {
+    font-size: 1.25rem;
+}
+
+/* Section Titles */
+.section-title {
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    text-shadow: 0 0 10px var(--neon-glow);
+    position: relative;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 50%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+    transform: translateX(-50%);
+}
+
+/* Supplier Carousel */
+.partner-carousel {
+    position: relative;
+    height: 160px;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+}
+
+.partner-carousel-inner {
+    display: inline-flex;
+    animation: marquee 16s linear infinite;
+    will-change: transform;
+    width: max-content;
+}
+
+.partner-carousel-inner:hover {
+    animation-play-state: paused;
+}
+
+.partner-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.75rem;
+    margin-right: 1rem;
+    margin-top: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    min-width: 200px;
+    max-width: 90%;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.partner-item:hover {
+    border: 1px solid var(--secondary-color);
+}
+
+.partner-logo {
+    width: 60px;
+    height: auto;
+    margin-right: 0.75rem;
+    object-fit: contain;
+    border-radius: 8px;
+    max-width: 100%;
+}
+
+.partner-info {
+    text-align: left;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.partner-info h5 {
+    font-size: 1rem;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.partner-info p {
+    font-size: 0.8rem;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-33.333%); }
+}
+
+/* Services Cards */
+.service-card .card-body {
+    padding: 2rem;
+    text-align: center;
+}
+
+.service-card i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--info-color);
+    text-shadow: 0 0 10px var(--neon-glow);
+}
+
+/* Certifications */
+.certification-card {
+    background: linear-gradient(145deg, var(--card-bg), var(--card-secondary-bg));
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+.certification-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+    opacity: 0.8;
+}
+
+.certification-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 15px var(--neon-glow);
+}
+
+.certification-card h5 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-shadow: 0 0 5px var(--neon-glow);
+    margin: 0;
+}
+
+/* Team Cards */
+.team-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 3px solid var(--neon-glow);
+    box-shadow: 0 0 15px var(--neon-glow);
+    transition: box-shadow 0.3s ease;
+}
+
+.team-img:hover {
+    box-shadow: 0 0 20px var(--neon-glow);
+}
+
+/* Footer */
+.footer {
+    background: linear-gradient(180deg, #047857, #065f46);
+    color: #f7fee7;
+    padding: 3rem 0;
+    border-top: 1px solid rgba(110, 231, 183, 0.2);
+    width: 100%;
+    text-align: center;
+}
+
+.footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.footer .row {
+    justify-content: center;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+.footer-column h5 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.footer-column p, .footer-column ul {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.footer-column ul li {
+    margin-bottom: 0.5rem;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.footer a {
+    color: var(--neon-glow);
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: var(--info-color);
+}
+
+/* Back to Top Button */
+#backToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#backToTop.show {
+    opacity: 1;
+}
+
+#backToTop:hover {
+    background: var(--secondary-color);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease forwards;
+    opacity: 0;
+}
+
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.4s; }
+.delay-4 { animation-delay: 0.8s; }
+
+/* Responsive */
+@media (max-width: 1400px) {
+    .main-content {
+        padding: 1.5rem;
+    }
+    .futuristic-card {
+        max-width: 100%;
+    }
+    .partner-item {
+        width: 260px;
+        min-width: 220px;
+    }
+}
+
+@media (max-width: 992px) {
+    .main-content {
+        padding: 1rem;
+    }
+    .hero-content h1 {
+        font-size: 2.8rem;
+    }
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+    .carousel-caption {
+        max-width: 70%;
+        padding: 10px;
+    }
+    .carousel-caption h5 {
+        font-size: 1.6rem;
+    }
+    .carousel-caption p {
+        font-size: 0.9rem;
+    }
+    .footer-column {
+        align-items: center;
+        text-align: center;
+    }
+    .social-icons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+    .carousel-caption {
+        max-width: 80%;
+        padding: 8px;
+    }
+    .carousel-caption h5 {
+        font-size: 1.2rem;
+    }
+    .carousel-caption p {
+        font-size: 0.8rem;
+    }
+    .partner-item {
+        width: 220px;
+        min-width: 180px;
+        padding: 0.5rem;
+        margin-right: 0.75rem;
+    }
+    .partner-logo {
+        width: 50px;
+        margin-right: 0.5rem;
+    }
+    .partner-info h5 {
+        font-size: 0.9rem;
+    }
+    .partner-info p {
+        font-size: 0.7rem;
+    }
+    .about-section .futuristic-card {
+        padding: 2rem;
+    }
+    .about-section .section-title {
+        font-size: 1.8rem;
+    }
+    .about-section .lead {
+        font-size: 1.1rem;
+    }
+    .futuristic-card {
+        padding: 1.5rem;
+    }
+    .footer-column {
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    .hero-content p {
+        font-size: 0.8rem;
+    }
+    .carousel-caption {
+        max-width: 90%;
+        padding: 6px;
+    }
+    .carousel-caption h5 {
+        font-size: 1rem;
+    }
+    .carousel-caption p {
+        font-size: 0.7rem;
+    }
+    .partner-item {
+        width: 180px;
+        min-width: 160px;
+        padding: 0.5rem;
+    }
+    .partner-logo {
+        width: 40px;
+        margin-right: 0.5rem;
+    }
+    .partner-info h5 {
+        font-size: 0.8rem;
+    }
+    .partner-info p {
+        font-size: 0.65rem;
+    }
+    .service-card .card-body {
+        padding: 1rem;
+    }
+    .certification-card {
+        max-width: 200px;
+    }
+    .team-img {
+        width: 120px;
+        height: 120px;
+    }
+    .footer-column h5 {
+        font-size: 1.1rem;
+    }
+    .footer-column p, .footer-column ul {
+        font-size: 0.85rem;
+    }
+}
+</style>
 </head>
 <body>
     <!-- Hero Section with Slideshow -->
@@ -507,160 +648,114 @@
         <div class="container hero-content">
             <h1>PharmaCo: Pioneering Natural Healthcare</h1>
             <p>Transforming lives through botanical innovations and AI-driven research</p>
-            <a href="login.html" class="btn">Get Started</a>
+            <a href="login.html" class="btn">Login</a>
         </div>
     </section>
 
-    <!-- Sidebar Navigation -->
-    <div class="sidebar" id="sidebar">
-        <a href="#" class="sidebar-item active">
-            <i class="fas fa-home"></i>
-            <span class="sidebar-text">Home</span>
-        </a>
-        <a href="#" class="sidebar-item">
-            <i class="fas fa-pills"></i>
-            <span class="sidebar-text">Medicines</span>
-        </a>
-        <a href="#" class="sidebar-item">
-            <i class="fas fa-chart-line"></i>
-            <span class="sidebar-text">Analytics</span>
-        </a>
-        <a href="#" class="sidebar-item">
-            <i class="fas fa-edit"></i>
-            <span class="sidebar-text">Update</span>
-        </a>
-        <a href="#" class="sidebar-item">
-            <i class="fas fa-clipboard-list"></i>
-            <span class="sidebar-text">Orders</span>
-        </a>
-        <a href="#" class="sidebar-item">
-            <i class="fas fa-industry"></i>
-            <span class="sidebar-text">Production</span>
-        </a>
-        <a href="#" class="sidebar-item">
-            <i class="fas fa-flask"></i>
-            <span class="sidebar-text">Raw Materials</span>
-        </a>
-        <a href="#" class="sidebar-item">
-            <i class="fas fa-users"></i>
-            <span class="sidebar-text">Users</span>
-        </a>
-        <a href="#" class="sidebar-item">
-            <i class="fas fa-sign-out-alt"></i>
-            <span class="sidebar-text">Logout</span>
-        </a>
-    </div>
-
     <!-- Main Content -->
     <div class="main-content">
-        <!-- Internal Bulletin / Notice Board -->
-        <section class="bulletin-section">
-            <div class="container">
-                <h2 class="section-title text-center mb-4 fade-in">Internal Notices</h2>
-                <div class="futuristic-card notice-list p-4 fade-in delay-1">
-                    <div class="notification-item notification-danger">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="fw-bold">Critical Low Stock: Herbal Pain Relief</div>
-                                <div class="small text-muted">Current stock: 25 units (Reorder point: 100)</div>
-                            </div>
-                            <span class="badge bg-danger">Action Required</span>
-                        </div>
-                    </div>
-                    <div class="notification-item notification-warning">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="fw-bold">Upcoming Expiry: Echinacea Extract</div>
-                                <div class="small text-muted">Batch #E429 expiring in 30 days</div>
-                            </div>
-                            <span class="badge bg-warning text-dark">Warning</span>
-                        </div>
-                    </div>
-                    <div class="notification-item notification-info">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="fw-bold">New Supplier Contract</div>
-                                <div class="small text-muted">Signed with GreenMedi on May 10</div>
-                            </div>
-                            <span class="badge bg-info">Info</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Suppliers Carousel -->
-        <section class="container my-5">
-            <h2 class="section-title text-center mb-4 fade-in">Our Trusted Suppliers</h2>
-            <div class="futuristic-card p-4 fade-in delay-1">
-                <div class="partner-carousel">
-                    <div class="partner-carousel-inner">
-                        <div class="partner-item">
-                            <img src="herbchem.png" alt="HerbChem Solutions" class="partner-logo">
-                            <div class="partner-info">
-                                <h5>HerbChem Solutions</h5>
-                                <p>Organic API supplier</p>
-                            </div>
-                        </div>
-                        <div class="partner-item">
-                            <img src="public/images/biogreen.png" alt="BioGreen Ingredients" class="partner-logo">
-                            <div class="partner-info">
-                                <h5>BioGreen Ingredients</h5>
-                                <p>Botanical compounds</p>
-                            </div>
-                        </div>
-                        <div class="partner-item">
-                            <img src="public/images/naturabase.png" alt="NaturaBase" class="partner-logo">
-                            <div class="partner-info">
-                                <h5>NaturaBase</h5>
-                                <p>ISO-certified herbs</p>
-                            </div>
-                        </div>
-                        <div class="partner-item">
-                            <img src="public/images/greenmed.png" alt="GreenMed Supply" class="partner-logo">
-                            <div class="partner-info">
-                                <h5>GreenMed Supply</h5>
-                                <p>Eco-friendly logistics</p>
-                            </div>
-                        </div>
-                        <!-- Duplicate for seamless looping -->
-                        <div class="partner-item">
-                            <img src="herbchem.png" alt="HerbChem Solutions" class="partner-logo">
-                            <div class="partner-info">
-                                <h5>HerbChem Solutions</h5>
-                                <p>Organic API supplier</p>
-                            </div>
-                        </div>
-                        <div class="partner-item">
-                            <img src="public/images/biogreen.png" alt="BioGreen Ingredients" class="partner-logo">
-                            <div class="partner-info">
-                                <h5>BioGreen Ingredients</h5>
-                                <p>Botanical compounds</p>
-                            </div>
-                        </div>
-                        <div class="partner-item">
-                            <img src="public/images/naturabase.png" alt="NaturaBase" class="partner-logo">
-                            <div class="partner-info">
-                                <h5>NaturaBase</h5>
-                                <p>ISO-certified herbs</p>
-                            </div>
-                        </div>
-                        <div class="partner-item">
-                            <img src="public/images/greenmed.png" alt="GreenMed Supply" class="partner-logo">
-                            <div class="partner-info">
-                                <h5>GreenMed Supply</h5>
-                                <p>Eco-friendly logistics</p>
-                            </div>
-                        </div>
+<section class="container my-5">
+    <h2 class="section-title mb-4 fade-in">Our Trusted Suppliers</h2>
+    <div class="futuristic-card p-4 fade-in delay-1">
+        <div class="partner-carousel">
+            <div class="partner-carousel-inner">
+                <!-- Original Items -->
+                <div class="partner-item">
+                    <img src="herbchem.png" alt="HerbChem Solutions" class="partner-logo">
+                    <div class="partner-info">
+                        <h5>HerbChem Solutions</h5>
+                        <p>Organic API supplier</p>
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <img src="public/images/biogreen.png" alt="BioGreen Ingredients" class="partner-logo">
+                    <div class="partner-info">
+                        <h5>BioGreen Ingredients</h5>
+                        <p>Botanical compounds</p>
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <img src="public/images/naturabase.png" alt="NaturaBase" class="partner-logo">
+                    <div class="partner-info">
+                        <h5>NaturaBase</h5>
+                        <p>ISO-certified herbs</p>
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <img src="public/images/greenmed.png" alt="GreenMed Supply" class="partner-logo">
+                    <div class="partner-info">
+                        <h5>GreenMed Supply</h5>
+                        <p>Eco-friendly logistics</p>
+                    </div>
+                </div>
+                <!-- Duplicated Items Set 1 -->
+                <div class="partner-item">
+                    <img src="herbchem.png" alt="HerbChem Solutions" class="partner-logo">
+                    <div class="partner-info">
+                        <h5>HerbChem Solutions</h5>
+                        <p>Organic API supplier</p>
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <img src="public/images/biogreen.png" alt="BioGreen Ingredients" class="partner-logo">
+                    <div class="partner-info">
+                        <h5>BioGreen Ingredients</h5>
+                        <p>Botanical compounds</p>
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <img src="public/images/naturabase.png" alt="NaturaBase" class="partner-logo">
+                    <div class="partner-info">
+                        <h5>NaturaBase</h5>
+                        <p>ISO-certified herbs</p>
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <img src="public/images/greenmed.png" alt="GreenMed Supply" class="partner-logo">
+                    <div class="partner-info">
+                        <h5>GreenMed Supply</h5>
+                        <p>Eco-friendly logistics</p>
+                    </div>
+                </div>
+                <!-- Duplicated Items Set 2 -->
+                <div class="partner-item">
+                    <img src="herbchem.png" alt="HerbChem Solutions" class="partner-logo">
+                    <div class="partner-info">
+                        <h5>HerbChem Solutions</h5>
+                        <p>Organic API supplier</p>
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <img src="public/images/biogreen.png" alt="BioGreen Ingredients" class="partner-logo">
+                    <div class="partner-info">
+                        <h5>BioGreen Ingredients</h5>
+                        <p>Botanical compounds</p>
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <img src="public/images/naturabase.png" alt="NaturaBase" class="partner-logo">
+                    <div class="partner-info">
+                        <h5>NaturaBase</h5>
+                        <p>ISO-certified herbs</p>
+                    </div>
+                </div>
+                <div class="partner-item">
+                    <img src="public/images/greenmed.png" alt="GreenMed Supply" class="partner-logo">
+                    <div class="partner-info">
+                        <h5>GreenMed Supply</h5>
+                        <p>Eco-friendly logistics</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
         <!-- Services / Capabilities Cards -->
         <section class="container my-5" id="services">
-            <h2 class="section-title text-center mb-4 fade-in">Our Services</h2>
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            <h2 class="section-title mb-4 fade-in">Our Services</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center">
                 <div class="col fade-in delay-1">
                     <div class="futuristic-card service-card">
                         <div class="card-body">
@@ -702,8 +797,8 @@
 
         <!-- Certifications & Accreditations -->
         <section class="container my-5">
-            <h2 class="section-title text-center mb-4 fade-in">Certifications & Accreditations</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 fade-in delay-1">
+            <h2 class="section-title mb-4 fade-in">Certifications & Accreditations</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center fade-in delay-1">
                 <div class="col">
                     <div class="certification-card">
                         <h5>ISO 9001 Certified</h5>
@@ -722,47 +817,10 @@
             </div>
         </section>
 
-        <!-- News & Announcements -->
-        <section class="container my-5">
-            <h2 class="section-title text-center mb-4 fade-in">News & Announcements</h2>
-            <div class="row g-3">
-                <div class="col-md-4 fade-in delay-1">
-                    <div class="futuristic-card news-card">
-                        <div class="card-body">
-                            <h5 class="card-title">New Herbal Launch</h5>
-                            <p class="card-text">Innovative botanical treatment unveiled.</p>
-                            <a href="#" class="stretched-link small">Read More</a>
-                        </div>
-                        <div class="card-footer text-muted small">May 10, 2025</div>
-                    </div>
-                </div>
-                <div class="col-md-4 fade-in delay-2">
-                    <div class="futuristic-card news-card">
-                        <div class="card-body">
-                            <h5 class="card-title">Research Milestone</h5>
-                            <p class="card-text">Breakthrough in herbal cancer therapy.</p>
-                            <a href="#" class="stretched-link small">Read More</a>
-                        </div>
-                        <div class="card-footer text-muted small">May 8, 2025</div>
-                    </div>
-                </div>
-                <div class="col-md-4 fade-in delay-3">
-                    <div class="futuristic-card news-card">
-                        <div class="card-body">
-                            <h5 class="card-title">Community Outreach</h5>
-                            <p class="card-text">Eco-health initiatives launched.</p>
-                            <a href="#" class="stretched-link small">Read More</a>
-                        </div>
-                        <div class="card-footer text-muted small">May 5, 2025</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Meet the Team -->
         <section class="container my-5">
-            <h2 class="section-title text-center mb-4 fade-in">Meet Our Leadership</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4 text-center">
+            <h2 class="section-title mb-4 fade-in">Meet Our Leadership</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center text-center">
                 <div class="col fade-in delay-1">
                     <div class="futuristic-card">
                         <img src="https://via.placeholder.com/150" class="team-img rounded-circle mx-auto mt-3" alt="Team Member 1">
@@ -806,73 +864,43 @@
         </section>
 
         <!-- About the Company -->
-        <section class="container my-5 futuristic-card p-4 fade-in">
-            <h2 class="section-title text-center mb-4">About PharmaCo</h2>
-            <p class="lead text-center">At PharmaCo, we harness nature and AI to craft innovative herbal solutions for a healthier future.</p>
-            
+        <section class="container my-5 about-section">
+            <div class="futuristic-card fade-in">
+                <h2 class="section-title mb-4">About PharmaCo</h2>
+                <p class="lead">At PharmaCo, we harness nature and AI to craft innovative herbal solutions for a healthier future.</p>
+                <p>Founded in 2010, PharmaCo combines cutting-edge AI technology with sustainable botanical research to develop safe, effective natural therapies. Our commitment to quality and eco-friendly practices ensures we deliver trusted health solutions worldwide.</p>
+            </div>
         </section>
 
         <!-- Footer -->
-        <footer class="footer text-center text-md-start">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 mb-3 mb-md-0">
-                        <h5>Contact Us</h5>
-                        <p>123 Pharma Lane, Health City<br>Email: info@pharmaco.com<br>Phone: (123) 456-7890</p>
-                    </div>
-                    <div class="col-md-4 mb-3 mb-md-0">
-                        <h5>Quick Links</h5>
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="text-decoration-none">Home</a></li>
-                            <li><a href="#" class="text-decoration-none">About</a></li>
-                            <li><a href="#" class="text-decoration-none">Services</a></li>
-                            <li><a href="#" class="text-decoration-none">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4">
-                        <h5>Follow Us</h5>
-                        <a href="#" class="me-2"><i class="fab fa-linkedin fs-5"></i></a>
-                        <a href="#" class="me-2"><i class="fab fa-twitter fs-5"></i></a>
-                        <a href="#"><i class="fab fa-facebook fs-5"></i></a>
-                    </div>
-                </div>
-                <div class="text-center mt-3">
-                    <p class="small">© 2025 PharmaCo. All rights reserved.</p>
+<footer class="footer">
+    <div class="container">
+        <div class="row align-items-start">
+            <div class="col-md-3 mb-3 mb-md-0 footer-column">
+                <h5>Contact Us</h5>
+                <p class="mb-0">123 Pharma Lane, Health City<br>Email: <a href="mailto:info@pharmaco.com">info@pharmaco.com</a><br>Phone: (123) 456-7890</p>
+            </div>
+            <div class="col-md-3 footer-column">
+                <h5>Follow Us</h5>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin fs-5"></i></a>
+                    <a href="#"><i class="fab fa-twitter fs-5"></i></a>
+                    <a href="#"><i class="fab fa-facebook fs-5"></i></a>
                 </div>
             </div>
-        </footer>
+        </div>
+        <div class="text-center mt-4">
+            <p class="small">© 2025 PharmaCo. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+        <!-- Back to Top Button -->
+        <button id="backToTop" title="Back to Top"><i class="fas fa-arrow-up"></i></button>
     </div>
 
     <!-- Bootstrap Bundle -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Smooth sidebar transition on scroll
-        window.addEventListener('scroll', () => {
-            const sidebar = document.getElementById('sidebar');
-            const heroSection = document.querySelector('.hero-section');
-            const scrollPosition = window.scrollY;
-            const heroHeight = heroSection.offsetHeight;
-
-            if (scrollPosition > heroHeight - 50) {
-                sidebar.classList.add('show');
-            } else {
-                sidebar.classList.remove('show');
-            }
-        });
-
-        // Handle sidebar navigation
-        document.querySelectorAll('.sidebar-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                document.querySelectorAll('.sidebar-item').forEach(i => {
-                    i.classList.remove('active');
-                });
-                item.classList.add('active');
-                e.preventDefault();
-                if (window.innerWidth < 768) {
-                    document.getElementById('sidebar').classList.remove('show');
-                }
-            });
-        });
         // Hero Carousel Pause on Hover
         const heroCarousel = document.getElementById('heroCarousel');
         heroCarousel.addEventListener('mouseenter', () => {
@@ -882,29 +910,6 @@
         heroCarousel.addEventListener('mouseleave', () => {
             const carousel = new bootstrap.Carousel(heroCarousel);
             carousel.cycle();
-        });
-
-        // Notice Filter
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const notificationItems = document.querySelectorAll('.notification-item');
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const filter = button.getAttribute('data-filter');
-
-                // Update active button
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-
-                // Filter notifications
-                notificationItems.forEach(item => {
-                    if (filter === 'all' || item.classList.contains(filter)) {
-                        item.classList.remove('hidden');
-                    } else {
-                        item.classList.add('hidden');
-                    }
-                });
-            });
         });
 
         // Back to Top Button
