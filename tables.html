@@ -131,7 +131,39 @@
             border-radius: 8px;
             overflow: hidden;
         }
+        /* Sidebar Scroll Behavior */
+.sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 260px;
+    background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
+    box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem 1.5rem;
+    z-index: 100;
+    overflow-y: auto; /* Enable scrolling within sidebar */
+    scrollbar-width: thin; /* Firefox: slim scrollbar */
+    scrollbar-color: var(--primary-color) var(--card-bg); /* Firefox: scrollbar colors */
+}
 
+/* Webkit browsers (Chrome, Safari) scrollbar styling */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: var(--card-bg);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #059669;
+}
         .table thead th {
             background-color: var(--primary-color);
             color: white;
@@ -218,6 +250,18 @@
         <a href="tables.html" class="sidebar-item active">
             <i class="fas fa-table"></i>
             <span>Tables</span>
+        </a>
+        <a href="production.html" class="sidebar-item ">
+            <i class="fas fa-industry"></i>
+            <span>Production</span>
+        </a>
+        <a href="raw-materials.html" class="sidebar-item ">
+            <i class="fas fa-warehouse"></i>
+            <span>Raw Materials</span>
+        </a>
+        <a href="manage-users.html" class="sidebar-item ">
+            <i class="fas fa-users"></i>
+            <span>Manage Users</span>
         </a>
         <a href="update.html" class="sidebar-item">
             <i class="fas fa-edit"></i>

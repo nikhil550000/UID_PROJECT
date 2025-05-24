@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaCo - Raw Materials Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #047857;
+            --secondary-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0ea5e9;
+            --background-color: #ecfdf5;
+            --card-bg: #fefce8;
+            --card-secondary-bg: #d4f4e2;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --neon-glow: #6ee7b7;
+            --card-border: #10b981;
+            --bulletin-bg: #d4f4e2;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, var(--background-color), #047857);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            width: 260px;
+            background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
+            box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem 1.5rem;
+            z-index: 100;
+        }
+        /* Sidebar Scroll Behavior */
+.sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 260px;
+    background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
+    box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem 1.5rem;
+    z-index: 100;
+    overflow-y: auto; /* Enable scrolling within sidebar */
+    scrollbar-width: thin; /* Firefox: slim scrollbar */
+    scrollbar-color: var(--primary-color) var(--card-bg); /* Firefox: scrollbar colors */
+}
+
+/* Webkit browsers (Chrome, Safari) scrollbar styling */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: var(--card-bg);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #059669;
+}
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--card-border);
+        }
+
+        .sidebar-header h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .sidebar-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .sidebar-item:hover {
+            background-color: var(--card-secondary-bg);
+            color: var(--primary-color);
+            transform: translateX(-5px);
+            box-shadow: 0 0 10px var(--neon-glow);
+            text-decoration: none;
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(to right, var(--card-secondary-bg), var(--neon-glow));
+            color: var(--text-primary);
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
+        }
+
+        .sidebar-item i {
+            width: 30px;
+            font-size: 1.2rem;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            text-shadow: 0 0 10px var(--neon-glow);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+            transform: translateX(-50%);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-right: 260px;
+            padding: 2rem;
+        }
+
+        /* Futuristic Card */
+        .futuristic-card {
+            background: linear-gradient(145deg, var(--card-bg), var(--card-secondary-bg));
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .futuristic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 0 15px var(--neon-glow);
+        }
+
+        /* Form Styling */
+        .material-form .form-control,
+        .material-form .form-select {
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+        }
+
+        .material-form .form-control:focus,
+        .material-form .form-select:focus {
+            border-color: var(--neon-glow);
+            box-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        .material-form .btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--info-color));
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .material-form .btn:hover {
+            box-shadow: 0 0 15px var(--neon-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Table Styling */
+        .material-table {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            overflow: hidden;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .material-table thead {
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+        }
+
+        .material-table th {
+            background: var(--primary-color);
+            color: #f5f5f5;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 1.1rem;
+            text-align: center;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 2px solid #059669;
+            position: relative;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .material-table th:not(:last-child) {
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .material-table th:hover {
+            background: #059669;
+            transform: scale(1.02);
+        }
+
+        .material-table th.action {
+            text-align: left;
+        }
+
+        .material-table td {
+            padding: 0.8rem;
+            vertical-align: middle;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--card-border);
+            transition: all 0.3s ease;
+        }
+
+        .material-table td.actions {
+            white-space: nowrap;
+        }
+
+        .material-table td.actions div {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .material-table tbody tr:nth-child(odd) {
+            background: var(--card-bg);
+        }
+
+        .material-table tbody tr:nth-child(even) {
+            background: #f9f7e0;
+        }
+
+        .material-table tbody tr.low-stock {
+            background: #fef3c7;
+        }
+
+        .material-table tbody tr:hover {
+            background: var(--card-secondary-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 0 10px var(--neon-glow);
+        }
+
+        .material-table .material-name,
+        .material-table .supplier {
+            font-weight: 600;
+        }
+
+        .material-table .status.low {
+            color: var(--warning-color);
+            font-weight: 500;
+        }
+
+        .material-table .btn-action {
+            background: var(--secondary-color);
+            border: none;
+            border-radius: 20px;
+            padding: 0.4rem 0.8rem;
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .material-table .btn-action:hover {
+            background: #12a689;
+            box-shadow: 0 0 8px var(--neon-glow);
+            transform: scale(1.05);
+        }
+
+        .material-table .btn-action:active {
+            transform: scale(0.95);
+        }
+
+        /* Row Animation */
+        .material-table tbody tr {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modal Styling */
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            box-shadow: 0 0 15px var(--neon-glow);
+        }
+
+        .modal-header {
+            background: var(--primary-color);
+            color: #f5f5f5;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--card-border);
+        }
+
+        .modal .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--info-color));
+            border: none;
+        }
+
+        .modal .btn-primary:hover {
+            box-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                margin-right: 0;
+                padding: 1rem;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                box-shadow: none;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .futuristic-card {
+                padding: 1.5rem;
+            }
+
+            .material-table th,
+            .material-table td {
+                padding: 0.6rem;
+                font-size: 0.8rem;
+            }
+
+            .material-table th {
+                font-size: 0.85rem;
+                padding: 0.7rem;
+            }
+
+            .material-table .btn-action {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>PharmaCo</h2>
+        </div>
+        <a href="home.html" class="sidebar-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="medicine-list.html" class="sidebar-item">
+            <i class="fas fa-pills"></i>
+            <span>Medicine List</span>
+        </a>
+        <a href="dashboards.html" class="sidebar-item">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboards</span>
+        </a>
+        <a href="tables.html" class="sidebar-item">
+            <i class="fas fa-table"></i>
+            <span>Tables</span>
+        </a>
+        <a href="production.html" class="sidebar-item">
+            <i class="fas fa-industry"></i>
+            <span>Production</span>
+        </a>
+        <a href="raw-materials.html" class="sidebar-item active">
+            <i class="fas fa-warehouse"></i>
+            <span>Raw Materials</span>
+        </a>
+        <a href="manage-users.html" class="sidebar-item ">
+            <i class="fas fa-users"></i>
+            <span>Manage Users</span>
+        </a>
+        <a href="update.html" class="sidebar-item">
+            <i class="fas fa-edit"></i>
+            <span>Update</span>
+        </a>
+        <a href="contact.html" class="sidebar-item">
+            <i class="fas fa-address-book"></i>
+            <span>Contact Details</span>
+        </a>
+        <a href="index.html" class="sidebar-item">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Add New Raw Material -->
+        <section class="my-5">
+            <h2 class="section-title text-center">Add New Raw Material</h2>
+            <div class="futuristic-card material-form">
+                <form id="materialForm">
+                    <div class="mb-3">
+                        <label for="materialName" class="form-label">Material Name</label>
+                        <input type="text" class="form-control" id="materialName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-select" id="category" required>
+                            <option value="" disabled selected>Select Category</option>
+                            <option value="Herbs">Herbs</option>
+                            <option value="Extracts">Extracts</option>
+                            <option value="Chemicals">Chemicals</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="supplier" class="form-label">Supplier</label>
+                        <select class="form-select" id="supplier" required>
+                            <option value="" disabled selected>Select Supplier</option>
+                            <option value="S001">Green Herbs Ltd</option>
+                            <option value="S002">Bio Extracts Inc</option>
+                            <option value="S003">Chem Supply Co</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="quantity" min="1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="unit" class="form-label">Unit</label>
+                        <select class="form-select" id="unit" required>
+                            <option value="" disabled selected>Select Unit</option>
+                            <option value="kg">Kilograms (kg)</option>
+                            <option value="liters">Liters (L)</option>
+                            <option value="units">Units</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="expiryDate" class="form-label">Expiry Date (Optional)</label>
+                        <input type="date" class="form-control" id="expiryDate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="threshold" class="form-label">Threshold Level</label>
+                        <input type="number" class="form-control" id="threshold" min="1" required>
+                    </div>
+                    <button type="submit" class="btn">Add Material</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Current Inventory -->
+        <section class="my-5">
+            <h2 class="section-title text-center">Current Inventory</h2>
+            <div class="futuristic-card">
+                <div class="table-responsive">
+                    <table class="table material-table">
+                        <thead>
+                            <tr>
+                                <th>Material Name</th>
+                                <th>Quantity</th>
+                                <th>Unit</th>
+                                <th>Supplier</th>
+                                <th>Last Restocked</th>
+                                <th>Threshold</th>
+                                <th>Status</th>
+                                <th class="action">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTable">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Restock Modal -->
+    <div class="modal fade" id="restockModal" tabindex="-1" aria-labelledby="restockModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="restockModalLabel">Restock Material</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="restockForm">
+                        <div class="mb-3">
+                            <label for="restockMaterialName" class="form-label">Material Name</label>
+                            <input type="text" class="form-control" id="restockMaterialName" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="restockQuantity" class="form-label">Quantity Change (Positive to Add, Negative to Remove)</label>
+                            <input type="number" class="form-control" id="restockQuantity" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="restockDate" class="form-label">Restock Date</label>
+                            <input type="date" class="form-control" id="restockDate" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Stock</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Restock History Modal -->
+    <div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="historyModalLabel">Restock History</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table material-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Quantity Change</th>
+                                <th>New Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="restockHistoryTable">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supplier Info Modal -->
+    <div class="modal fade" id="supplierModal" tabindex="-1" aria-labelledby="supplierModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="supplierModalLabel">Supplier Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Name:</strong> <span id="supplierName"></span></p>
+                    <p><strong>Contact:</strong> <span id="supplierContact"></span></p>
+                    <p><strong>Email:</strong> <span id="supplierEmail"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample data for demonstration
+        let materials = [
+            { id: 'M001', name: 'Ginseng Root', category: 'Herbs', supplier: 'S001', quantity: 50, unit: 'kg', expiryDate: '2026-05-01', lastRestocked: '2025-05-10', threshold: 100, history: [] },
+            { id: 'M002', name: 'Echinacea Extract', category: 'Extracts', supplier: 'S002', quantity: 200, unit: 'liters', expiryDate: '', lastRestocked: '2025-05-12', threshold: 150, history: [] }
+        ];
+
+        const suppliers = {
+            'S001': { name: 'Green Herbs Ltd', contact: '+1-555-1234', email: 'contact@greenherbs.com' },
+            'S002': { name: 'Bio Extracts Inc', contact: '+1-555-5678', email: 'info@bioextracts.com' },
+            'S003': { name: 'Chem Supply Co', contact: '+1-555-9012', email: 'sales@chemsupply.com' }
+        };
+
+        // Format date to DD/MM/YYYY
+        function formatDate(dateStr) {
+            if (!dateStr) return 'N/A';
+            const date = new Date(dateStr);
+            return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+        }
+
+        // Render inventory table
+        function renderInventory() {
+            const tbody = document.getElementById('inventoryTable');
+            tbody.innerHTML = '';
+            materials.forEach(material => {
+                const isLow = material.quantity < material.threshold;
+                tbody.innerHTML += `
+                    <tr ${isLow ? 'class="low-stock"' : ''}>
+                        <td class="material-name">${material.name}</td>
+                        <td>${material.quantity}</td>
+                        <td>${material.unit}</td>
+                        <td class="supplier"><a href="#" onclick="showSupplier('${material.supplier}')">${suppliers[material.supplier].name}</a></td>
+                        <td>${formatDate(material.lastRestocked)}</td>
+                        <td>${material.threshold}</td>
+                        <td class="status ${isLow ? 'low' : ''}">${isLow ? 'Low' : 'Normal'}</td>
+                        <td class="actions">
+                            <div>
+                                <button class="btn-action" onclick="openRestockModal('${material.id}')">Restock</button>
+                                <button class="btn-action" onclick="showHistory('${material.id}')">View History</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Add new material
+        document.getElementById('materialForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('materialName').value;
+            const category = document.getElementById('category').value;
+            const supplier = document.getElementById('supplier').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const unit = document.getElementById('unit').value;
+            const expiryDate = document.getElementById('expiryDate').value;
+            const threshold = parseInt(document.getElementById('threshold').value);
+
+            if (quantity <= 0) {
+                alert('Quantity must be positive');
+                return;
+            }
+            if (expiryDate && new Date(expiryDate) < new Date()) {
+                alert('Expiry date must be in the future');
+                return;
+            }
+            if (threshold <= 0) {
+                alert('Threshold must be positive');
+                return;
+            }
+
+            const id = `M${(materials.length + 1).toString().padStart(3, '0')}`;
+            materials.push({
+                id,
+                name,
+                category,
+                supplier,
+                quantity,
+                unit,
+                expiryDate,
+                lastRestocked: new Date().toISOString().split('T')[0],
+                threshold,
+                history: []
+            });
+
+            renderInventory();
+            alert(`Material ${name} added to inventory`);
+            e.target.reset();
+        });
+
+        // Open restock modal
+        function openRestockModal(id) {
+            const material = materials.find(m => m.id === id);
+            if (material) {
+                document.getElementById('restockMaterialName').value = material.name;
+                document.getElementById('restockQuantity').value = '';
+                document.getElementById('restockDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('restockForm').dataset.materialId = id;
+                new bootstrap.Modal(document.getElementById('restockModal')).show();
+            }
+        }
+
+        // Handle restock submission
+        document.getElementById('restockForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = e.target.dataset.materialId;
+            const quantityChange = parseInt(document.getElementById('restockQuantity').value);
+            const restockDate = document.getElementById('restockDate').value;
+
+            const material = materials.find(m => m.id === id);
+            if (material) {
+                const newQuantity = material.quantity + quantityChange;
+                if (newQuantity < 0) {
+                    alert('Cannot reduce quantity below 0');
+                    return;
+                }
+
+                material.quantity = newQuantity;
+                material.lastRestocked = restockDate;
+                material.history.push({
+                    date: restockDate,
+                    quantityChange,
+                    newQuantity
+                });
+
+                renderInventory();
+                alert(`Stock updated for ${material.name} (${quantityChange > 0 ? '+' : ''}${quantityChange} ${material.unit})`);
+                bootstrap.Modal.getInstance(document.getElementById('restockModal')).hide();
+            }
+        });
+
+        // Show restock history
+        function showHistory(id) {
+            const material = materials.find(m => m.id === id);
+            if (material) {
+                const tbody = document.getElementById('restockHistoryTable');
+                tbody.innerHTML = '';
+                material.history.forEach(entry => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${formatDate(entry.date)}</td>
+                            <td>${entry.quantityChange}</td>
+                            <td>${entry.newQuantity}</td>
+                        </tr>
+                    `;
+                });
+                document.getElementById('historyModalLabel').textContent = `Restock History for ${material.name}`;
+                new bootstrap.Modal(document.getElementById('historyModal')).show();
+            }
+        }
+
+        // Show supplier details
+        function showSupplier(supplierId) {
+            const supplier = suppliers[supplierId];
+            if (supplier) {
+                document.getElementById('supplierName').textContent = supplier.name;
+                document.getElementById('supplierContact').textContent = supplier.contact;
+                document.getElementById('supplierEmail').textContent = supplier.email;
+                new bootstrap.Modal(document.getElementById('supplierModal')).show();
+            }
+        }
+
+        // Initial render
+        renderInventory();
+    </script>
+</body>
+</html>

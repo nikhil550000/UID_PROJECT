@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaCo - Manage Users</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #047857;
+            --secondary-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0ea5e9;
+            --background-color: #ecfdf5;
+            --card-bg: #fefce8;
+            --card-secondary-bg: #d4f4e2;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --neon-glow: #6ee7b7;
+            --card-border: #10b981;
+            --bulletin-bg: #d4f4e2;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+        /* Sidebar Scroll Behavior */
+.sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 260px;
+    background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
+    box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem 1.5rem;
+    z-index: 100;
+    overflow-y: auto; /* Enable scrolling within sidebar */
+    scrollbar-width: thin; /* Firefox: slim scrollbar */
+    scrollbar-color: var(--primary-color) var(--card-bg); /* Firefox: scrollbar colors */
+}
+
+/* Webkit browsers (Chrome, Safari) scrollbar styling */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: var(--card-bg);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #059669;
+}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, var(--background-color), #047857);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            width: 260px;
+            background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
+            box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem 1.5rem;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--card-border);
+        }
+
+        .sidebar-header h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .sidebar-item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .sidebar-item:hover {
+            background-color: var(--card-secondary-bg);
+            color: var(--primary-color);
+            transform: translateX(-5px);
+            box-shadow: 0 0 10px var(--neon-glow);
+            text-decoration: none;
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(to right, var(--card-secondary-bg), var(--neon-glow));
+            color: var(--text-primary);
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
+        }
+
+        .sidebar-item i {
+            width: 30px;
+            font-size: 1.2rem;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            text-shadow: 0 0 10px var(--neon-glow);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+            transform: translateX(-50%);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-right: 260px;
+            padding: 2rem;
+        }
+
+        /* Futuristic Card */
+        .futuristic-card {
+            background: linear-gradient(145deg, var(--card-bg), var(--card-secondary-bg));
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .futuristic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 0 15px var(--neon-glow);
+        }
+
+        /* Form Styling */
+        .user-form .form-control,
+        .user-form .form-select {
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+        }
+
+        .user-form .form-control:focus,
+        .user-form .form-select:focus {
+            border-color: var(--neon-glow);
+            box-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        .user-form .btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--info-color));
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .user-form .btn:hover {
+            box-shadow: 0 0 15px var(--neon-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Table Styling */
+        .user-table {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            overflow: hidden;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .user-table thead {
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+        }
+
+        .user-table th {
+            background: var(--primary-color);
+            color: #f5f5f5;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 1.1rem;
+            text-align: center;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 2px solid #059669;
+            position: relative;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .user-table th:not(:last-child) {
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-table th:hover {
+            background: #059669;
+            transform: scale(1.02);
+        }
+
+        .user-table th.action {
+            text-align: left;
+        }
+
+        .user-table td {
+            padding: 0.8rem;
+            vertical-align: middle;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--card-border);
+            transition: all 0.3s ease;
+        }
+
+        .user-table td.actions {
+            white-space: nowrap;
+        }
+
+        .user-table td.actions div {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .user-table tbody tr:nth-child(odd) {
+            background: var(--card-bg);
+        }
+
+        .user-table tbody tr:nth-child(even) {
+            background: #f9f7e0;
+        }
+
+        .user-table tbody tr:hover {
+            background: var(--card-secondary-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 0 10px var(--neon-glow);
+        }
+
+        .user-table .user-name {
+            font-weight: 600;
+        }
+
+        .user-table .status.deactivated {
+            color: var(--danger-color);
+            font-weight: 500;
+        }
+
+        .user-table .btn-action {
+            background: var(--secondary-color);
+            border: none;
+            border-radius: 20px;
+            padding: 0.4rem 0.8rem;
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .user-table .btn-action:hover {
+            background: #12a689;
+            box-shadow: 0 0 8px var(--neon-glow);
+            transform: scale(1.05);
+        }
+
+        .user-table .btn-action:active {
+            transform: scale(0.95);
+        }
+
+        /* Row Animation */
+        .user-table tbody tr {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modal Styling */
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            box-shadow: 0 0 15px var(--neon-glow);
+        }
+
+        .modal-header {
+            background: var(--primary-color);
+            color: #f5f5f5;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--card-border);
+        }
+
+        .modal .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--info-color));
+            border: none;
+        }
+
+        .modal .btn-primary:hover {
+            box-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                margin-right: 0;
+                padding: 1rem;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                box-shadow: none;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .futuristic-card {
+                padding: 1.5rem;
+            }
+
+            .user-table th,
+            .user-table td {
+                padding: 0.6rem;
+                font-size: 0.8rem;
+            }
+
+            .user-table th {
+                font-size: 0.85rem;
+                padding: 0.7rem;
+            }
+
+            .user-table .btn-action {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>PharmaCo</h2>
+        </div>
+        <a href="home.html" class="sidebar-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="medicine-list.html" class="sidebar-item">
+            <i class="fas fa-pills"></i>
+            <span>Medicine List</span>
+        </a>
+        <a href="dashboards.html" class="sidebar-item">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboards</span>
+        </a>
+        <a href="tables.html" class="sidebar-item">
+            <i class="fas fa-table"></i>
+            <span>Tables</span>
+        </a>
+        <a href="production.html" class="sidebar-item">
+            <i class="fas fa-industry"></i>
+            <span>Production</span>
+        </a>
+        <a href="raw-materials.html" class="sidebar-item">
+            <i class="fas fa-warehouse"></i>
+            <span>Raw Materials</span>
+        </a>
+        <a href="manage-users.html" class="sidebar-item active">
+            <i class="fas fa-users"></i>
+            <span>Manage Users</span>
+        </a>
+        <a href="update.html" class="sidebar-item">
+            <i class="fas fa-edit"></i>
+            <span>Update</span>
+        </a>
+        <a href="contact.html" class="sidebar-item">
+            <i class="fas fa-address-book"></i>
+            <span>Contact Details</span>
+        </a>
+        <a href="index.html" class="sidebar-item">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Add New User -->
+        <section class="my-5">
+            <h2 class="section-title text-center">Add New User</h2>
+            <div class="futuristic-card user-form">
+                <form id="userForm">
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="userName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userEmail" class="form-label">Email/User ID</label>
+                        <input type="email" class="form-control" id="userEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userRole" class="form-label">Role</label>
+                        <select class="form-select" id="userRole" required>
+                            <option value="" disabled selected>Select Role</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Staff">Staff</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="userPassword" required>
+                    </div>
+                    <button type="submit" class="btn">Add User</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- User List -->
+        <section class="my-5">
+            <h2 class="section-title text-center">User List</h2>
+            <div class="futuristic-card">
+                <div class="table-responsive">
+                    <table class="table user-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email/User ID</th>
+                                <th>Role</th>
+                                <th>Last Login</th>
+                                <th>Status</th>
+                                <th class="action">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTable">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editUserForm">
+                        <div class="mb-3">
+                            <label for="editUserName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="editUserName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserEmail" class="form-label">Email/User ID</label>
+                            <input type="email" class="form-control" id="editUserEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserRole" class="form-label">Role</label>
+                            <select class="form-select" id="editUserRole" required>
+                                <option value="Admin">Admin</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Staff">Staff</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update User</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Password Modal -->
+    <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resetPasswordModalLabel">Reset Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="resetPasswordForm">
+                        <div class="mb-3">
+                            <label for="resetUserName" class="form-label">User Name</label>
+                            <input type="text" class="form-control" id="resetUserName" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="newPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Reset Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample data for demonstration
+        let users = [
+            { id: 'U001', name: 'Admin User', email: 'admin@pharma.com', role: 'Admin', lastLogin: '2025-05-20', status: 'Active', password: 'admin123' },
+            { id: 'U002', name: 'Jane Smith', email: 'jane@pharma.com', role: 'Manager', lastLogin: '2025-05-19', status: 'Active', password: 'manager456' }
+        ];
+
+        // Format date to DD/MM/YYYY
+        function formatDate(dateStr) {
+            if (!dateStr) return 'N/A';
+            const date = new Date(dateStr);
+            return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+        }
+
+        // Validate email
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        // Render user table
+        function renderUsers() {
+            const tbody = document.getElementById('userTable');
+            tbody.innerHTML = '';
+            users.forEach(user => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="user-name">${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.role}</td>
+                        <td>${formatDate(user.lastLogin)}</td>
+                        <td class="status ${user.status.toLowerCase()}">${user.status}</td>
+                        <td class="actions">
+                            <div>
+                                <button class="btn-action" onclick="openEditModal('${user.id}')">Edit</button>
+                                <button class="btn-action" onclick="resetPassword('${user.id}')">Reset Password</button>
+                                <button class="btn-action" onclick="toggleStatus('${user.id}')" ${user.id === 'U001' ? 'disabled' : ''}>
+                                    ${user.status === 'Active' ? 'Deactivate' : 'Activate'}
+                                </button>
+                                <button class="btn-action" onclick="deleteUser('${user.id}')" ${user.id === 'U001' ? 'disabled' : ''}>Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Add new user
+        document.getElementById('userForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+            const role = document.getElementById('userRole').value;
+            const password = document.getElementById('userPassword').value;
+
+            if (!isValidEmail(email)) {
+                alert('Please enter a valid email');
+                return;
+            }
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters');
+                return;
+            }
+            if (users.find(u => u.email === email)) {
+                alert('Email/User ID already exists');
+                return;
+            }
+
+            const id = `U${(users.length + 1).toString().padStart(3, '0')}`;
+            users.push({
+                id,
+                name,
+                email,
+                role,
+                lastLogin: '',
+                status: 'Active',
+                password
+            });
+
+            renderUsers();
+            alert(`User ${name} added`);
+            e.target.reset();
+        });
+
+        // Open edit user modal
+        function openEditModal(id) {
+            const user = users.find(u => u.id === id);
+            if (user) {
+                document.getElementById('editUserName').value = user.name;
+                document.getElementById('editUserEmail').value = user.email;
+                document.getElementById('editUserRole').value = user.role;
+                document.getElementById('editUserForm').dataset.userId = id;
+                new bootstrap.Modal(document.getElementById('editUserModal')).show();
+            }
+        }
+
+        // Handle edit user submission
+        document.getElementById('editUserForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = e.target.dataset.userId;
+            const name = document.getElementById('editUserName').value;
+            const email = document.getElementById('editUserEmail').value;
+            const role = document.getElementById('editUserRole').value;
+
+            if (!isValidEmail(email)) {
+                alert('Please enter a valid email');
+                return;
+            }
+            if (users.find(u => u.email === email && u.id !== id)) {
+                alert('Email/User ID already exists');
+                return;
+            }
+
+            const user = users.find(u => u.id === id);
+            if (user) {
+                user.name = name;
+                user.email = email;
+                user.role = role;
+                renderUsers();
+                alert(`User ${name} updated`);
+                bootstrap.Modal.getInstance(document.getElementById('editUserModal')).hide();
+            }
+        });
+
+        // Open reset password modal
+        function resetPassword(id) {
+            const user = users.find(u => u.id === id);
+            if (user) {
+                document.getElementById('resetUserName').value = user.name;
+                document.getElementById('newPassword').value = '';
+                document.getElementById('resetPasswordForm').dataset.userId = id;
+                new bootstrap.Modal(document.getElementById('resetPasswordModal')).show();
+            }
+        }
+
+        // Handle reset password submission
+        document.getElementById('resetPasswordForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = e.target.dataset.userId;
+            const newPassword = document.getElementById('newPassword').value;
+
+            if (newPassword.length < 6) {
+                alert('Password must be at least 6 characters');
+                return;
+            }
+
+            const user = users.find(u => u.id === id);
+            if (user) {
+                user.password = newPassword;
+                alert(`Password reset for ${user.name}`);
+                bootstrap.Modal.getInstance(document.getElementById('resetPasswordModal')).hide();
+            }
+        });
+
+        // Toggle user status
+        function toggleStatus(id) {
+            const user = users.find(u => u.id === id);
+            if (user) {
+                user.status = user.status === 'Active' ? 'Deactivated' : 'Active';
+                renderUsers();
+                alert(`User ${user.name} ${user.status === 'Active' ? 'activated' : 'deactivated'}`);
+            }
+        }
+
+        // Delete user
+        function deleteUser(id) {
+            const user = users.find(u => u.id === id);
+            if (user && confirm(`Are you sure you want to delete ${user.name}?`)) {
+                users = users.filter(u => u.id !== id);
+                renderUsers();
+                alert(`User ${user.name} deleted`);
+            }
+        }
+
+        // Initial render
+        renderUsers();
+    </script>
+</body>
+</html>
