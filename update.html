@@ -26,6 +26,10 @@
             --card-border: #10b981;
         }
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(180deg, var(--background-color), #047857);
@@ -44,66 +48,46 @@
             width: 260px;
             background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
             box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
-            padding: 2rem 1.5rem;
+            padding: 1.5rem 1rem;
             z-index: 100;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
-        /* Sidebar Scroll Behavior */
-.sidebar {
-    position: fixed;
-    right: 0;
-    top: 0;
-    height: 100vh;
-    width: 260px;
-    background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
-    box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
-    padding: 2rem 1.5rem;
-    z-index: 100;
-    overflow-y: auto; /* Enable scrolling within sidebar */
-    scrollbar-width: thin; /* Firefox: slim scrollbar */
-    scrollbar-color: var(--primary-color) var(--card-bg); /* Firefox: scrollbar colors */
-}
-
-/* Webkit browsers (Chrome, Safari) scrollbar styling */
-.sidebar::-webkit-scrollbar {
-    width: 8px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-    background: var(--card-bg);
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 4px;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: #059669;
-}
         .sidebar-header {
             text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--card-border);
         }
-
-        .sidebar-header h2 {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin: 0;
+        .sidebar-header img {
+            max-width: 150px;
+            height: auto;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-
+        .sidebar-header img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px var(--neon-glow);
+        }
+        .sidebar-nav {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.4rem;
+        }
         .sidebar-item {
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.75rem;
+            padding: 0.5rem 1rem;
             border-radius: 8px;
             color: var(--text-secondary);
             display: flex;
             align-items: center;
             transition: all 0.3s ease;
             text-decoration: none;
+            font-size: 1rem;
         }
-
         .sidebar-item:hover {
             background-color: var(--card-secondary-bg);
             color: var(--primary-color);
@@ -111,17 +95,15 @@
             box-shadow: 0 0 10px var(--neon-glow);
             text-decoration: none;
         }
-
         .sidebar-item.active {
             background: linear-gradient(to right, var(--card-secondary-bg), var(--neon-glow));
             color: var(--text-primary);
             font-weight: 600;
             box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
         }
-
         .sidebar-item i {
-            width: 30px;
-            font-size: 1.2rem;
+            width: 25px;
+            font-size: 1.1rem;
         }
 
         /* Main Content */
@@ -204,54 +186,91 @@
             font-size: 0.875rem;
             margin-top: 0.25rem;
         }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+            }
+            .sidebar-header img, .sidebar-item span {
+                display: none;
+            }
+            .main-content {
+                margin-right: 80px;
+            }
+            .sidebar-item i {
+                width: 100%;
+                text-align: center;
+            }
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 220px;
+                right: -220px;
+                padding: 1rem;
+            }
+            .sidebar.show {
+                right: 0;
+            }
+            .main-content {
+                margin-right: 0;
+                padding: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Sidebar Navigation -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h2>PharmaCo</h2>
+            <img src="logo.png" alt="PharmaCo Logo">
         </div>
-        <a href="home.html" class="sidebar-item">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="medicine-list.html" class="sidebar-item">
-            <i class="fas fa-pills"></i>
-            <span>Medicine List</span>
-        </a>
-        <a href="dashboards.html" class="sidebar-item">
-            <i class="fas fa-chart-line"></i>
-            <span>Dashboards</span>
-        </a>
-        <a href="tables.html" class="sidebar-item">
-            <i class="fas fa-table"></i>
-            <span>Tables</span>
-        </a>
-        <a href="production.html" class="sidebar-item ">
-            <i class="fas fa-industry"></i>
-            <span>Production</span>
-        </a>
-        <a href="raw-materials.html" class="sidebar-item ">
-            <i class="fas fa-warehouse"></i>
-            <span>Raw Materials</span>
-        </a>
-        <a href="manage-users.html" class="sidebar-item ">
-            <i class="fas fa-users"></i>
-            <span>Manage Users</span>
-        </a>
-        <a href="update.html" class="sidebar-item active">
-            <i class="fas fa-edit"></i>
-            <span>Update</span>
-        </a>
-        <a href="contact.html" class="sidebar-item">
-            <i class="fas fa-address-book"></i>
-            <span>Contact Details</span>
-        </a>
-        <a href="index.html" class="sidebar-item">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
-        </a>
+        <nav class="sidebar-nav">
+            <a href="home.html" class="sidebar-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="medicine-list.html" class="sidebar-item">
+                <i class="fas fa-pills"></i>
+                <span>Medicine List</span>
+            </a>
+            <a href="dashboards.html" class="sidebar-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboards</span>
+            </a>
+            <a href="tables.html" class="sidebar-item">
+                <i class="fas fa-table"></i>
+                <span>Tables</span>
+            </a>
+            <a href="production.html" class="sidebar-item">
+                <i class="fas fa-industry"></i>
+                <span>Production</span>
+            </a>
+            <a href="raw-materials.html" class="sidebar-item">
+                <i class="fas fa-warehouse"></i>
+                <span>Raw Materials</span>
+            </a>
+            <a href="manage-users.html" class="sidebar-item">
+                <i class="fas fa-users"></i>
+                <span>Manage Users</span>
+            </a>
+            <a href="update.html" class="sidebar-item active">
+                <i class="fas fa-edit"></i>
+                <span>Update</span>
+            </a>
+            <a href="orders.html" class="sidebar-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Orders</span>
+            </a>
+            <a href="contact.html" class="sidebar-item">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+            <a href="index.html" class="sidebar-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </nav>
     </div>
 
     <!-- Main Content -->
@@ -267,26 +286,33 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="medicineName" class="form-label required-field">Medicine Name</label>
-                        <input type="text" class="form-control" id="medicineName" required>
+                        <select class="form-select" id="medicineName" required>
+                            <option value="" disabled selected>Select Medicine</option>
+                            <option value="Paracetamol 500mg">Paracetamol 500mg</option>
+                            <option value="Amoxicillin 250mg">Amoxicillin 250mg</option>
+                            <option value="Ibuprofen 400mg">Ibuprofen 400mg</option>
+                            <option value="Omeprazole">Omeprazole</option>
+                            <option value="Metformin">Metformin</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="medicineType" class="form-label required-field">Type</label>
                         <select class="form-select" id="medicineType" required>
-                            <option value="">Select Type</option>
-                            <option value="tablet">Tablet</option>
-                            <option value="capsule">Capsule</option>
-                            <option value="syrup">Syrup</option>
-                            <option value="injection">Injection</option>
+                            <option value="" disabled selected>Select Type</option>
+                            <option value="Tablet">Tablet</option>
+                            <option value="Capsule">Capsule</option>
+                            <option value="Syrup">Syrup</option>
+                            <option value="Injection">Injection</option>
                         </select>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="supplier" class="form-label required-field">Supplier</label>
                         <select class="form-select" id="supplier" required>
-                            <option value="">Select Supplier</option>
-                            <option value="SUP001">MedSupply Co.</option>
-                            <option value="SUP002">PharmaTech Ltd.</option>
+                            <option value="" disabled selected>Select Supplier</option>
+                            <option value="S001">MediChem Solutions</option>
+                            <option value="S002">PharmaSynth Labs</option>
                         </select>
                     </div>
                 </div>
@@ -302,16 +328,12 @@
                     <div class="col-md-4 mb-3">
                         <label for="status" class="form-label required-field">Status</label>
                         <select class="form-select" id="status" required>
-                            <option value="">Select Status</option>
-                            <option value="active">Active</option>
-                            <option value="low_stock">Low Stock</option>
-                            <option value="inactive">Inactive</option>
+                            <option value="" disabled selected>Select Status</option>
+                            <option value="Active">Active</option>
+                            <option value="Low Stock">Low Stock</option>
+                            <option value="Inactive">Inactive</option>
                         </select>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" rows="3"></textarea>
                 </div>
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">
@@ -332,7 +354,11 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="supplierName" class="form-label required-field">Company Name</label>
-                        <input type="text" class="form-control" id="supplierName" required>
+                        <select class="form-select" id="supplierName" required>
+                            <option value="" disabled selected>Select Supplier</option>
+                            <option value="MediChem Solutions">MediChem Solutions</option>
+                            <option value="PharmaSynth Labs">PharmaSynth Labs</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -353,15 +379,11 @@
                     <div class="col-md-6 mb-3">
                         <label for="status" class="form-label required-field">Status</label>
                         <select class="form-select" id="status" required>
-                            <option value="">Select Status</option>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
+                            <option value="" disabled selected>Select Status</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
                         </select>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <textarea class="form-control" id="address" rows="3"></textarea>
                 </div>
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">
@@ -375,18 +397,46 @@
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Sidebar scroll behavior
+        window.addEventListener('scroll', () => {
+            const sidebar = document.getElementById('sidebar');
+            const scrollPosition = window.scrollY;
+            if (scrollPosition > 50) {
+                sidebar.classList.add('show');
+            } else {
+                sidebar.classList.remove('show');
+            }
+        });
+
+        // Sidebar navigation
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                if (window.innerWidth < 768) {
+                    document.getElementById('sidebar').classList.remove('show');
+                }
+            });
+        });
+
+        // Set active state based on current page
+        const currentPath = window.location.pathname.split('/').pop() || 'update.html';
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            if (item.getAttribute('href') === currentPath) {
+                item.classList.add('active');
+            }
+        });
+
         // Form validation and submission handling
         document.getElementById('medicineUpdateForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            // Add your form submission logic here
             alert('Medicine updated successfully!');
         });
 
         document.getElementById('supplierUpdateForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            // Add your form submission logic here
             alert('Supplier updated successfully!');
         });
     </script>
 </body>
-</html> 
+</html>

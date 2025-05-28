@@ -49,66 +49,46 @@
             width: 260px;
             background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
             box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
-            padding: 2rem 1.5rem;
+            padding: 1.5rem 1rem;
             z-index: 100;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
-        /* Sidebar Scroll Behavior */
-.sidebar {
-    position: fixed;
-    right: 0;
-    top: 0;
-    height: 100vh;
-    width: 260px;
-    background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
-    box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
-    padding: 2rem 1.5rem;
-    z-index: 100;
-    overflow-y: auto; /* Enable scrolling within sidebar */
-    scrollbar-width: thin; /* Firefox: slim scrollbar */
-    scrollbar-color: var(--primary-color) var(--card-bg); /* Firefox: scrollbar colors */
-}
-
-/* Webkit browsers (Chrome, Safari) scrollbar styling */
-.sidebar::-webkit-scrollbar {
-    width: 8px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-    background: var(--card-bg);
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 4px;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: #059669;
-}
         .sidebar-header {
             text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--card-border);
         }
-
-        .sidebar-header h2 {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin: 0;
+        .sidebar-header img {
+            max-width: 150px;
+            height: auto;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-
+        .sidebar-header img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px var(--neon-glow);
+        }
+        .sidebar-nav {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.4rem;
+        }
         .sidebar-item {
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.75rem;
+            padding: 0.5rem 1rem;
             border-radius: 8px;
             color: var(--text-secondary);
             display: flex;
             align-items: center;
             transition: all 0.3s ease;
             text-decoration: none;
+            font-size: 1rem;
         }
-
         .sidebar-item:hover {
             background-color: var(--card-secondary-bg);
             color: var(--primary-color);
@@ -116,17 +96,15 @@
             box-shadow: 0 0 10px var(--neon-glow);
             text-decoration: none;
         }
-
         .sidebar-item.active {
             background: linear-gradient(to right, var(--card-secondary-bg), var(--neon-glow));
             color: var(--text-primary);
             font-weight: 600;
             box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
         }
-
         .sidebar-item i {
-            width: 30px;
-            font-size: 1.2rem;
+            width: 25px;
+            font-size: 1.1rem;
         }
 
         /* Section Titles */
@@ -139,7 +117,6 @@
             display: inline-block;
             margin-bottom: 1.5rem;
         }
-
         .section-title::after {
             content: '';
             position: absolute;
@@ -166,7 +143,6 @@
             padding: 2rem;
             transition: all 0.3s ease;
         }
-
         .futuristic-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 0 15px var(--neon-glow);
@@ -180,13 +156,11 @@
             background: var(--card-bg);
             color: var(--text-primary);
         }
-
         .material-form .form-control:focus,
         .material-form .form-select:focus {
             border-color: var(--neon-glow);
             box-shadow: 0 0 10px var(--neon-glow);
         }
-
         .material-form .btn {
             background: linear-gradient(45deg, var(--primary-color), var(--info-color));
             border: none;
@@ -196,7 +170,6 @@
             font-weight: 600;
             transition: all 0.3s ease;
         }
-
         .material-form .btn:hover {
             box-shadow: 0 0 15px var(--neon-glow);
             transform: translateY(-2px);
@@ -211,12 +184,10 @@
             border-collapse: separate;
             border-spacing: 0;
         }
-
         .material-table thead {
             border-radius: 8px 8px 0 0;
             overflow: hidden;
         }
-
         .material-table th {
             background: var(--primary-color);
             color: #f5f5f5;
@@ -232,20 +203,16 @@
             transition: all 0.3s ease;
             animation: fadeIn 0.5s ease-in;
         }
-
         .material-table th:not(:last-child) {
             border-right: 1px solid rgba(255, 255, 255, 0.2);
         }
-
         .material-table th:hover {
             background: #059669;
             transform: scale(1.02);
         }
-
         .material-table th.action {
             text-align: left;
         }
-
         .material-table td {
             padding: 0.8rem;
             vertical-align: middle;
@@ -253,44 +220,35 @@
             border-bottom: 1px solid var(--card-border);
             transition: all 0.3s ease;
         }
-
         .material-table td.actions {
             white-space: nowrap;
         }
-
         .material-table td.actions div {
             display: flex;
             gap: 0.3rem;
         }
-
         .material-table tbody tr:nth-child(odd) {
             background: var(--card-bg);
         }
-
         .material-table tbody tr:nth-child(even) {
             background: #f9f7e0;
         }
-
         .material-table tbody tr.low-stock {
             background: #fef3c7;
         }
-
         .material-table tbody tr:hover {
             background: var(--card-secondary-bg);
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 0 10px var(--neon-glow);
         }
-
         .material-table .material-name,
         .material-table .supplier {
             font-weight: 600;
         }
-
         .material-table .status.low {
             color: var(--warning-color);
             font-weight: 500;
         }
-
         .material-table .btn-action {
             background: var(--secondary-color);
             border: none;
@@ -301,13 +259,11 @@
             font-size: 0.85rem;
             transition: all 0.3s ease;
         }
-
         .material-table .btn-action:hover {
             background: #12a689;
             box-shadow: 0 0 8px var(--neon-glow);
             transform: scale(1.05);
         }
-
         .material-table .btn-action:active {
             transform: scale(0.95);
         }
@@ -316,7 +272,6 @@
         .material-table tbody tr {
             animation: fadeIn 0.5s ease-in;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -329,59 +284,66 @@
             border-radius: 12px;
             box-shadow: 0 0 15px var(--neon-glow);
         }
-
         .modal-header {
             background: var(--primary-color);
             color: #f5f5f5;
             border-bottom: 1px solid var(--card-border);
         }
-
         .modal-footer {
             border-top: 1px solid var(--card-border);
         }
-
         .modal .btn-primary {
             background: linear-gradient(45deg, var(--primary-color), var(--info-color));
             border: none;
         }
-
         .modal .btn-primary:hover {
             box-shadow: 0 0 10px var(--neon-glow);
         }
 
         /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+            }
+            .sidebar-header img, .sidebar-item span {
+                display: none;
+            }
+            .main-content {
+                margin-right: 80px;
+            }
+            .sidebar-item i {
+                width: 100%;
+                text-align: center;
+            }
+        }
         @media (max-width: 768px) {
+            .sidebar {
+                width: 220px;
+                right: -220px;
+                padding: 1rem;
+            }
+            .sidebar.show {
+                right: 0;
+            }
             .main-content {
                 margin-right: 0;
                 padding: 1rem;
             }
-
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                box-shadow: none;
-            }
-
             .section-title {
                 font-size: 1.5rem;
             }
-
             .futuristic-card {
                 padding: 1.5rem;
             }
-
             .material-table th,
             .material-table td {
                 padding: 0.6rem;
                 font-size: 0.8rem;
             }
-
             .material-table th {
                 font-size: 0.85rem;
                 padding: 0.7rem;
             }
-
             .material-table .btn-action {
                 padding: 0.3rem 0.6rem;
                 font-size: 0.8rem;
@@ -391,54 +353,86 @@
 </head>
 <body>
     <!-- Sidebar Navigation -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h2>PharmaCo</h2>
+            <img src="logo.png" alt="PharmaCo Logo">
         </div>
-        <a href="home.html" class="sidebar-item">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="medicine-list.html" class="sidebar-item">
-            <i class="fas fa-pills"></i>
-            <span>Medicine List</span>
-        </a>
-        <a href="dashboards.html" class="sidebar-item">
-            <i class="fas fa-chart-line"></i>
-            <span>Dashboards</span>
-        </a>
-        <a href="tables.html" class="sidebar-item">
-            <i class="fas fa-table"></i>
-            <span>Tables</span>
-        </a>
-        <a href="production.html" class="sidebar-item">
-            <i class="fas fa-industry"></i>
-            <span>Production</span>
-        </a>
-        <a href="raw-materials.html" class="sidebar-item active">
-            <i class="fas fa-warehouse"></i>
-            <span>Raw Materials</span>
-        </a>
-        <a href="manage-users.html" class="sidebar-item ">
-            <i class="fas fa-users"></i>
-            <span>Manage Users</span>
-        </a>
-        <a href="update.html" class="sidebar-item">
-            <i class="fas fa-edit"></i>
-            <span>Update</span>
-        </a>
-        <a href="contact.html" class="sidebar-item">
-            <i class="fas fa-address-book"></i>
-            <span>Contact Details</span>
-        </a>
-        <a href="index.html" class="sidebar-item">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
-        </a>
+        <nav class="sidebar-nav">
+            <a href="home.html" class="sidebar-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="medicine-list.html" class="sidebar-item">
+                <i class="fas fa-pills"></i>
+                <span>Medicine List</span>
+            </a>
+            <a href="dashboards.html" class="sidebar-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboards</span>
+            </a>
+            <a href="tables.html" class="sidebar-item">
+                <i class="fas fa-table"></i>
+                <span>Tables</span>
+            </a>
+            <a href="production.html" class="sidebar-item">
+                <i class="fas fa-industry"></i>
+                <span>Production</span>
+            </a>
+            <a href="raw-materials.html" class="sidebar-item active">
+                <i class="fas fa-warehouse"></i>
+                <span>Raw Materials</span>
+            </a>
+            <a href="manage-users.html" class="sidebar-item">
+                <i class="fas fa-users"></i>
+                <span>Manage Users</span>
+            </a>
+            <a href="update.html" class="sidebar-item">
+                <i class="fas fa-edit"></i>
+                <span>Update</span>
+            </a>
+            <a href="orders.html" class="sidebar-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Orders</span>
+            </a>
+            <a href="contact.html" class="sidebar-item">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+            <a href="index.html" class="sidebar-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </nav>
     </div>
 
     <!-- Main Content -->
     <div class="main-content">
+        <!-- Current Inventory -->
+        <section class="my-5">
+            <h2 class="section-title text-center">Current Inventory</h2>
+            <div class="futuristic-card">
+                <div class="table-responsive">
+                    <table class="table material-table">
+                        <thead>
+                            <tr>
+                                <th>Material Name</th>
+                                <th>Quantity</th>
+                                <th>Unit</th>
+                                <th>Supplier</th>
+                                <th>Last Restocked</th>
+                                <th>Threshold</th>
+                                <th>Status</th>
+                                <th class="action">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTable">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
         <!-- Add New Raw Material -->
         <section class="my-5">
             <h2 class="section-title text-center">Add New Raw Material</h2>
@@ -446,24 +440,30 @@
                 <form id="materialForm">
                     <div class="mb-3">
                         <label for="materialName" class="form-label">Material Name</label>
-                        <input type="text" class="form-control" id="materialName" required>
+                        <select class="form-select" id="materialName" required>
+                            <option value="" disabled selected>Select Material</option>
+                            <option value="Acetaminophen">Acetaminophen</option>
+                            <option value="Amoxicillin Trihydrate">Amoxicillin Trihydrate</option>
+                            <option value="Ibuprofen">Ibuprofen</option>
+                            <option value="Omeprazole">Omeprazole</option>
+                            <option value="Metformin Hydrochloride">Metformin Hydrochloride</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="category" class="form-label">Category</label>
                         <select class="form-select" id="category" required>
                             <option value="" disabled selected>Select Category</option>
-                            <option value="Herbs">Herbs</option>
-                            <option value="Extracts">Extracts</option>
-                            <option value="Chemicals">Chemicals</option>
+                            <option value="Active Pharmaceutical Ingredient">Active Pharmaceutical Ingredient</option>
+                            <option value="Excipient">Excipient</option>
+                            <option value="Solvent">Solvent</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="supplier" class="form-label">Supplier</label>
                         <select class="form-select" id="supplier" required>
                             <option value="" disabled selected>Select Supplier</option>
-                            <option value="S001">Green Herbs Ltd</option>
-                            <option value="S002">Bio Extracts Inc</option>
-                            <option value="S003">Chem Supply Co</option>
+                            <option value="S001">MediChem Solutions</option>
+                            <option value="S002">PharmaSynth Labs</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -489,32 +489,6 @@
                     </div>
                     <button type="submit" class="btn">Add Material</button>
                 </form>
-            </div>
-        </section>
-
-        <!-- Current Inventory -->
-        <section class="my-5">
-            <h2 class="section-title text-center">Current Inventory</h2>
-            <div class="futuristic-card">
-                <div class="table-responsive">
-                    <table class="table material-table">
-                        <thead>
-                            <tr>
-                                <th>Material Name</th>
-                                <th>Quantity</th>
-                                <th>Unit</th>
-                                <th>Supplier</th>
-                                <th>Last Restocked</th>
-                                <th>Threshold</th>
-                                <th>Status</th>
-                                <th class="action">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="inventoryTable">
-                            <!-- Populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </section>
     </div>
@@ -594,16 +568,37 @@
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Sidebar scroll behavior
+        window.addEventListener('scroll', () => {
+            const sidebar = document.getElementById('sidebar');
+            const scrollPosition = window.scrollY;
+            if (scrollPosition > 50) {
+                sidebar.classList.add('show');
+            } else {
+                sidebar.classList.remove('show');
+            }
+        });
+
+        // Sidebar navigation
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                if (window.innerWidth < 768) {
+                    document.getElementById('sidebar').classList.remove('show');
+                }
+            });
+        });
+
         // Sample data for demonstration
         let materials = [
-            { id: 'M001', name: 'Ginseng Root', category: 'Herbs', supplier: 'S001', quantity: 50, unit: 'kg', expiryDate: '2026-05-01', lastRestocked: '2025-05-10', threshold: 100, history: [] },
-            { id: 'M002', name: 'Echinacea Extract', category: 'Extracts', supplier: 'S002', quantity: 200, unit: 'liters', expiryDate: '', lastRestocked: '2025-05-12', threshold: 150, history: [] }
+            { id: 'M001', name: 'Acetaminophen', category: 'Active Pharmaceutical Ingredient', supplier: 'S001', quantity: 50, unit: 'kg', expiryDate: '2026-05-01', lastRestocked: '2025-05-10', threshold: 100, history: [] },
+            { id: 'M002', name: 'Amoxicillin Trihydrate', category: 'Active Pharmaceutical Ingredient', supplier: 'S002', quantity: 200, unit: 'kg', expiryDate: '', lastRestocked: '2025-05-12', threshold: 150, history: [] }
         ];
 
         const suppliers = {
-            'S001': { name: 'Green Herbs Ltd', contact: '+1-555-1234', email: 'contact@greenherbs.com' },
-            'S002': { name: 'Bio Extracts Inc', contact: '+1-555-5678', email: 'info@bioextracts.com' },
-            'S003': { name: 'Chem Supply Co', contact: '+1-555-9012', email: 'sales@chemsupply.com' }
+            'S001': { name: 'MediChem Solutions', contact: '+91 9876543210', email: 'john@medichem.com' },
+            'S002': { name: 'PharmaSynth Labs', contact: '+91 9876543211', email: 'sarah@pharmasynth.com' }
         };
 
         // Format date to DD/MM/YYYY
@@ -701,25 +696,29 @@
             const quantityChange = parseInt(document.getElementById('restockQuantity').value);
             const restockDate = document.getElementById('restockDate').value;
 
-            const material = materials.find(m => m.id === id);
-            if (material) {
-                const newQuantity = material.quantity + quantityChange;
-                if (newQuantity < 0) {
-                    alert('Cannot reduce quantity below 0');
-                    return;
+            if (quantityChange) {
+                const material = materials.find(m => m.id === id);
+                if (material) {
+                    const newQuantity = material.quantity + quantityChange;
+                    if (newQuantity < 0) {
+                        alert('Cannot reduce quantity below 0');
+                        return;
+                    }
+
+                    material.quantity = newQuantity;
+                    material.lastRestocked = restockDate;
+                    material.history.push({
+                        date: restockDate,
+                        quantityChange,
+                        newQuantity
+                    });
+
+                    renderInventory();
+                    alert(`Stock updated for ${material.name} (${quantityChange > 0 ? '+' : ''}${quantityChange} ${material.unit})`);
+                    bootstrap.Modal.getInstance(document.getElementById('restockModal')).hide();
                 }
-
-                material.quantity = newQuantity;
-                material.lastRestocked = restockDate;
-                material.history.push({
-                    date: restockDate,
-                    quantityChange,
-                    newQuantity
-                });
-
-                renderInventory();
-                alert(`Stock updated for ${material.name} (${quantityChange > 0 ? '+' : ''}${quantityChange} ${material.unit})`);
-                bootstrap.Modal.getInstance(document.getElementById('restockModal')).hide();
+            } else {
+                alert('Please enter a valid quantity');
             }
         });
 

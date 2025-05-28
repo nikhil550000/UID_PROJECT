@@ -49,66 +49,46 @@
             width: 260px;
             background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
             box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
-            padding: 2rem 1.5rem;
+            padding: 1.5rem 1rem;
             z-index: 100;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
-
         .sidebar-header {
             text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--card-border);
         }
-
-        .sidebar-header h2 {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin: 0;
+        .sidebar-header img {
+            max-width: 150px;
+            height: auto;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-
+        .sidebar-header img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px var(--neon-glow);
+        }
+        .sidebar-nav {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.4rem;
+        }
         .sidebar-item {
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.75rem;
+            padding: 0.5rem 1rem;
             border-radius: 8px;
             color: var(--text-secondary);
             display: flex;
             align-items: center;
             transition: all 0.3s ease;
             text-decoration: none;
+            font-size: 1rem;
         }
-        /* Sidebar Scroll Behavior */
-.sidebar {
-    position: fixed;
-    right: 0;
-    top: 0;
-    height: 100vh;
-    width: 260px;
-    background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
-    box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
-    padding: 2rem 1.5rem;
-    z-index: 100;
-    overflow-y: auto; /* Enable scrolling within sidebar */
-    scrollbar-width: thin; /* Firefox: slim scrollbar */
-    scrollbar-color: var(--primary-color) var(--card-bg); /* Firefox: scrollbar colors */
-}
-
-/* Webkit browsers (Chrome, Safari) scrollbar styling */
-.sidebar::-webkit-scrollbar {
-    width: 8px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-    background: var(--card-bg);
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 4px;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: #059669;
-}
         .sidebar-item:hover {
             background-color: var(--card-secondary-bg);
             color: var(--primary-color);
@@ -116,17 +96,15 @@
             box-shadow: 0 0 10px var(--neon-glow);
             text-decoration: none;
         }
-
         .sidebar-item.active {
             background: linear-gradient(to right, var(--card-secondary-bg), var(--neon-glow));
             color: var(--text-primary);
             font-weight: 600;
             box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
         }
-
         .sidebar-item i {
-            width: 30px;
-            font-size: 1.2rem;
+            width: 25px;
+            font-size: 1.1rem;
         }
 
         /* Section Titles */
@@ -139,7 +117,6 @@
             display: inline-block;
             margin-bottom: 1.5rem;
         }
-
         .section-title::after {
             content: '';
             position: absolute;
@@ -166,28 +143,25 @@
             padding: 2rem;
             transition: all 0.3s ease;
         }
-
         .futuristic-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 0 15px var(--neon-glow);
         }
 
         /* Form Styling */
-        .production-form .form-control,
-        .production-form .form-select {
+        .batch-form .form-control,
+        .batch-form .form-select {
             border: 1px solid var(--card-border);
             border-radius: 8px;
             background: var(--card-bg);
             color: var(--text-primary);
         }
-
-        .production-form .form-control:focus,
-        .production-form .form-select:focus {
+        .batch-form .form-control:focus,
+        .batch-form .form-select:focus {
             border-color: var(--neon-glow);
             box-shadow: 0 0 10px var(--neon-glow);
         }
-
-        .production-form .btn {
+        .batch-form .btn {
             background: linear-gradient(45deg, var(--primary-color), var(--info-color));
             border: none;
             border-radius: 25px;
@@ -196,14 +170,13 @@
             font-weight: 600;
             transition: all 0.3s ease;
         }
-
-        .production-form .btn:hover {
+        .batch-form .btn:hover {
             box-shadow: 0 0 15px var(--neon-glow);
             transform: translateY(-2px);
         }
 
         /* Table Styling */
-        .production-table {
+        .batch-table {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 12px;
@@ -211,13 +184,11 @@
             border-collapse: separate;
             border-spacing: 0;
         }
-
-        .production-table thead {
+        .batch-table thead {
             border-radius: 8px 8px 0 0;
             overflow: hidden;
         }
-
-        .production-table th {
+        .batch-table th {
             background: var(--primary-color);
             color: #f5f5f5;
             font-weight: 700;
@@ -226,237 +197,248 @@
             text-transform: uppercase;
             padding: 1.1rem;
             text-align: center;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
             border-bottom: 2px solid #059669;
             position: relative;
             transition: all 0.3s ease;
             animation: fadeIn 0.5s ease-in;
         }
-
-        .production-table th:not(:last-child) {
+        .batch-table th:not(:last-child) {
             border-right: 1px solid rgba(255, 255, 255, 0.2);
         }
-
-        .production-table th:hover {
+        .batch-table th:hover {
             background: #059669;
             transform: scale(1.02);
         }
-
-        .production-table th.action {
+        .batch-table th.action {
             text-align: left;
         }
-
-        .production-table td {
-            padding: 1rem;
+        .batch-table td {
+            padding: 0.8rem;
             vertical-align: middle;
             color: var(--text-primary);
             border-bottom: 1px solid var(--card-border);
             transition: all 0.3s ease;
         }
-
-        .production-table tbody tr:nth-child(odd) {
+        .batch-table td.actions {
+            white-space: nowrap;
+        }
+        .batch-table td.actions div {
+            display: flex;
+            gap: 0.3rem;
+        }
+        .batch-table tbody tr:nth-child(odd) {
             background: var(--card-bg);
         }
-
-        .production-table tbody tr:nth-child(even) {
+        .batch-table tbody tr:nth-child(even) {
             background: #f9f7e0;
         }
-
-        .production-table tbody tr:hover {
+        .batch-table tbody tr:hover {
             background: var(--card-secondary-bg);
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 0 10px var(--neon-glow);
         }
-
-        .production-table .batch-id,
-        .production-table .medicine-name {
+        .batch-table .batch-id,
+        .batch-table .product {
             font-weight: 600;
         }
-
-        .production-table .status {
-            transition: color 0.3s ease;
-        }
-
-        .production-table .status.completed {
-            color: var(--secondary-color);
-            font-weight: 500;
-        }
-
-        .production-table .btn-complete {
-            background: linear-gradient(45deg, var(--secondary-color), var(--info-color));
+        .batch-table .btn-action {
+            background: var(--secondary-color);
             border: none;
             border-radius: 20px;
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             color: white;
             font-weight: 500;
+            font-size: 0.85rem;
             transition: all 0.3s ease;
         }
-
-        .production-table .btn-complete:hover {
-            background: linear-gradient(45deg, var(--info-color), var(--secondary-color));
-            box-shadow: 0 0 12px var(--neon-glow);
-            animation: pulse 1.5s infinite;
+        .batch-table .btn-action:hover {
+            background: #12a689;
+            box-shadow: 0 0 8px var(--neon-glow);
+            transform: scale(1.05);
         }
-
-        .production-table .btn-complete:active {
+        .batch-table .btn-action:active {
             transform: scale(0.95);
         }
 
-        .production-table .btn-complete:disabled {
-            background: var(--text-secondary);
-            cursor: not-allowed;
-            box-shadow: none;
-            animation: none;
-        }
-
         /* Row Animation */
-        .production-table tbody tr {
+        .batch-table tbody tr {
             animation: fadeIn 0.5s ease-in;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 var(--neon-glow); }
-            70% { box-shadow: 0 0 0 10px rgba(110, 231, 183, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(110, 231, 183, 0); }
-        }
-
-        /* Filter Styling */
-        .filter-section {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }
-
-        .filter-section .form-control,
-        .filter-section .form-select {
-            max-width: 200px;
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
+        /* Modal Styling */
+        .modal-content {
             background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            box-shadow: 0 0 15px var(--neon-glow);
         }
-
-        .filter-section .form-control:focus,
-        .filter-section .form-select:focus {
-            border-color: var(--neon-glow);
+        .modal-header {
+            background: var(--primary-color);
+            color: #f5f5f5;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .modal-footer {
+            border-top: 1px solid var(--card-border);
+        }
+        .modal .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--info-color));
+            border: none;
+        }
+        .modal .btn-primary:hover {
             box-shadow: 0 0 10px var(--neon-glow);
         }
 
         /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+            }
+            .sidebar-header img, .sidebar-item span {
+                display: none;
+            }
+            .main-content {
+                margin-right: 80px;
+            }
+            .sidebar-item i {
+                width: 100%;
+                text-align: center;
+            }
+        }
         @media (max-width: 768px) {
+            .sidebar {
+                width: 220px;
+                right: -220px;
+                padding: 1rem;
+            }
+            .sidebar.show {
+                right: 0;
+            }
             .main-content {
                 margin-right: 0;
                 padding: 1rem;
             }
-
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                box-shadow: none;
-            }
-
             .section-title {
                 font-size: 1.5rem;
             }
-
             .futuristic-card {
                 padding: 1.5rem;
             }
-
-            .production-table th,
-            .production-table td {
-                padding: 0.7rem;
-                font-size: 0.85rem;
+            .batch-table th,
+            .batch-table td {
+                padding: 0.6rem;
+                font-size: 0.8rem;
             }
-
-            .production-table th {
+            .batch-table th {
                 font-size: 0.85rem;
                 padding: 0.7rem;
             }
-
-            .production-table .btn-complete {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.85rem;
-            }
-
-            .filter-section {
-                flex-direction: column;
-            }
-
-            .filter-section .form-control,
-            .filter-section .form-select {
-                max-width: 100%;
+            .batch-table .btn-action {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
             }
         }
     </style>
 </head>
 <body>
     <!-- Sidebar Navigation -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h2>PharmaCo</h2>
+            <img src="logo.png" alt="PharmaCo Logo">
         </div>
-        <a href="home.html" class="sidebar-item">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="medicine-list.html" class="sidebar-item">
-            <i class="fas fa-pills"></i>
-            <span>Medicine List</span>
-        </a>
-        <a href="dashboards.html" class="sidebar-item">
-            <i class="fas fa-chart-line"></i>
-            <span>Dashboards</span>
-        </a>
-        <a href="tables.html" class="sidebar-item">
-            <i class="fas fa-table"></i>
-            <span>Tables</span>
-        </a>
-        <a href="production.html" class="sidebar-item active">
-            <i class="fas fa-industry"></i>
-            <span>Production</span>
-        </a>
-        <a href="raw-materials.html" class="sidebar-item ">
-            <i class="fas fa-warehouse"></i>
-            <span>Raw Materials</span>
-        </a>
-        <a href="manage-users.html" class="sidebar-item ">
-            <i class="fas fa-users"></i>
-            <span>Manage Users</span>
-        </a>
-        <a href="update.html" class="sidebar-item">
-            <i class="fas fa-edit"></i>
-            <span>Update</span>
-        </a>
-        <a href="contact.html" class="sidebar-item">
-            <i class="fas fa-address-book"></i>
-            <span>Contact Details</span>
-        </a>
-        <a href="index.html" class="sidebar-item">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
-        </a>
+        <nav class="sidebar-nav">
+            <a href="home.html" class="sidebar-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="medicine-list.html" class="sidebar-item">
+                <i class="fas fa-pills"></i>
+                <span>Medicine List</span>
+            </a>
+            <a href="dashboards.html" class="sidebar-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboards</span>
+            </a>
+            <a href="tables.html" class="sidebar-item">
+                <i class="fas fa-table"></i>
+                <span>Tables</span>
+            </a>
+            <a href="production.html" class="sidebar-item active">
+                <i class="fas fa-industry"></i>
+                <span>Production</span>
+            </a>
+            <a href="raw-materials.html" class="sidebar-item">
+                <i class="fas fa-warehouse"></i>
+                <span>Raw Materials</span>
+            </a>
+            <a href="manage-users.html" class="sidebar-item">
+                <i class="fas fa-users"></i>
+                <span>Manage Users</span>
+            </a>
+            <a href="update.html" class="sidebar-item">
+                <i class="fas fa-edit"></i>
+                <span>Update</span>
+            </a>
+            <a href="orders.html" class="sidebar-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Orders</span>
+            </a>
+            <a href="contact.html" class="sidebar-item">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+            <a href="index.html" class="sidebar-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </nav>
     </div>
 
     <!-- Main Content -->
     <div class="main-content">
-        <!-- Create Production Batch -->
+        <!-- Ongoing Batches -->
         <section class="my-5">
-            <h2 class="section-title text-center">Create Production Batch</h2>
-            <div class="futuristic-card production-form">
-                <form id="productionForm">
+            <h2 class="section-title text-center">Ongoing Batches</h2>
+            <div class="futuristic-card">
+                <div class="table-responsive">
+                    <table class="table batch-table">
+                        <thead>
+                            <tr>
+                                <th>Batch ID</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Status</th>
+                                <th>Start Date</th>
+                                <th>Expected Completion</th>
+                                <th class="action">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ongoingBatchesTable">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add New Batch -->
+        <section class="my-5">
+            <h2 class="section-title text-center">Add New Batch</h2>
+            <div class="futuristic-card batch-form">
+                <form id="batchForm">
                     <div class="mb-3">
-                        <label for="medicine" class="form-label">Medicine</label>
-                        <select class="form-select" id="medicine" required>
-                            <option value="" disabled selected>Select Medicine</option>
-                            <option value="Herbal Pain Relief">Herbal Pain Relief</option>
-                            <option value="Echinacea Extract">Echinacea Extract</option>
-                            <option value="Ginseng Tonic">Ginseng Tonic</option>
+                        <label for="productName" class="form-label">Product Name</label>
+                        <select class="form-select" id="productName" required>
+                            <option value="" disabled selected>Select Product</option>
+                            <option value="Paracetamol 500mg">Paracetamol 500mg</option>
+                            <option value="Amoxicillin 250mg">Amoxicillin 250mg</option>
+                            <option value="Ibuprofen 400mg">Ibuprofen 400mg</option>
+                            <option value="Omeprazole">Omeprazole</option>
+                            <option value="Metformin">Metformin</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -468,223 +450,258 @@
                         <input type="date" class="form-control" id="startDate" required>
                     </div>
                     <div class="mb-3">
-                        <label for="endDate" class="form-label">Expected End Date</label>
-                        <input type="date" class="form-control" id="endDate" required>
+                        <label for="expectedCompletion" class="form-label">Expected Completion</label>
+                        <input type="date" class="form-control" id="expectedCompletion" required>
                     </div>
                     <div class="mb-3">
-                        <label for="staff" class="form-label">Assign Staff</label>
-                        <select class="form-select" id="staff" required>
-                            <option value="" disabled selected>Select Staff</option>
-                            <option value="John Doe">John Doe</option>
-                            <option value="Jane Smith">Jane Smith</option>
-                            <option value="Mark Lee">Mark Lee</option>
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" id="status" required>
+                            <option value="" disabled selected>Select Status</option>
+                            <option value="Scheduled">Scheduled</option>
+                            <option value="In Progress">In Progress</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn">Create Batch</button>
+                    <button type="submit" class="btn">Add Batch</button>
                 </form>
             </div>
         </section>
+    </div>
 
-        <!-- Ongoing Batches -->
-        <section class="my-5">
-            <h2 class="section-title text-center">Ongoing Batches</h2>
-            <div class="futuristic-card">
-                <div class="table-responsive">
-                    <table class="table production-table">
+    <!-- Update Batch Modal -->
+    <div class="modal fade" id="updateBatchModal" tabindex="-1" aria-labelledby="updateBatchModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateBatchModalLabel">Update Batch</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateBatchForm">
+                        <div class="mb-3">
+                            <label for="updateBatchId" class="form-label">Batch ID</label>
+                            <input type="text" class="form-control" id="updateBatchId" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateQuantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="updateQuantity" min="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateStatus" class="form-label">Status</label>
+                            <select class="form-select" id="updateStatus" required>
+                                <option value="Scheduled">Scheduled</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Failed">Failed</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateNotes" class="form-label">Notes</label>
+                            <textarea class="form-control" id="updateNotes" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Batch</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Batch History Modal -->
+    <div class="modal fade" id="batchHistoryModal" tabindex="-1" aria-labelledby="batchHistoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="batchHistoryModalLabel">Batch History</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table batch-table">
                         <thead>
                             <tr>
-                                <th>Batch ID</th>
-                                <th>Medicine Name</th>
-                                <th>Start Date</th>
-                                <th>ETA</th>
+                                <th>Date</th>
                                 <th>Status</th>
                                 <th>Quantity</th>
-                                <th class="action">Action</th>
+                                <th>Notes</th>
                             </tr>
                         </thead>
-                        <tbody id="ongoingBatches">
+                        <tbody id="batchHistoryTable">
                             <!-- Populated by JavaScript -->
                         </tbody>
                     </table>
                 </div>
             </div>
-        </section>
-
-        <!-- Production History -->
-        <section class="my-5">
-            <h2 class="section-title text-center">Production History</h2>
-            <div class="futuristic-card">
-                <div class="filter-section">
-                    <input type="date" class="form-control" id="filterStartDate" placeholder="Start Date">
-                    <input type="date" class="form-control" id="filterEndDate" placeholder="End Date">
-                    <select class="form-select" id="filterMedicine">
-                        <option value="">All Medicines</option>
-                        <option value="Herbal Pain Relief">Herbal Pain Relief</option>
-                        <option value="Echinacea Extract">Echinacea Extract</option>
-                        <option value="Ginseng Tonic">Ginseng Tonic</option>
-                    </select>
-                    <select class="form-select" id="filterStatus">
-                        <option value="">All Statuses</option>
-                        <option value="In-progress">In-progress</option>
-                        <option value="Completed">Completed</option>
-                    </select>
-                </div>
-                <div class="table-responsive">
-                    <table class="table production-table">
-                        <thead>
-                            <tr>
-                                <th>Batch ID</th>
-                                <th>Medicine Name</th>
-                                <th>Start Date</th>
-                                <th>ETA</th>
-                                <th>Status</th>
-                                <th>Quantity</th>
-                            </tr>
-                        </thead>
-                        <tbody id="historyBatches">
-                            <!-- Populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
+        </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Sample data for demonstration
-        let ongoingBatches = [
-            { id: 'B001', medicine: 'Herbal Pain Relief', startDate: '2025-05-10', eta: '2025-05-20', status: 'In-progress', quantity: 500 },
-            { id: 'B002', medicine: 'Echinacea Extract', startDate: '2025-05-12', eta: '2025-05-22', status: 'In-progress', quantity: 300 }
-        ];
-        let historyBatches = [
-            { id: 'B003', medicine: 'Ginseng Tonic', startDate: '2025-04-01', eta: '2025-04-10', status: 'Completed', quantity: 1000 }
+        // Sidebar scroll behavior
+        window.addEventListener('scroll', () => {
+            const sidebar = document.getElementById('sidebar');
+            const scrollPosition = window.scrollY;
+            if (scrollPosition > 50) {
+                sidebar.classList.add('show');
+            } else {
+                sidebar.classList.remove('show');
+            }
+        });
+
+        // Sidebar navigation
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                if (window.innerWidth < 768) {
+                    document.getElementById('sidebar').classList.remove('show');
+                }
+            });
+        });
+
+        // Set active state based on current page
+        const currentPath = window.location.pathname.split('/').pop() || 'production.html';
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            if (item.getAttribute('href') === currentPath) {
+                item.classList.add('active');
+            }
+        });
+
+        // Sample batch data
+        let batches = [
+            { id: 'B001', product: 'Paracetamol 500mg', quantity: 1000, status: 'In Progress', startDate: '2025-05-20', expectedCompletion: '2025-05-30', history: [] },
+            { id: 'B002', product: 'Ibuprofen 400mg', quantity: 500, status: 'Scheduled', startDate: '2025-05-25', expectedCompletion: '2025-06-01', history: [] }
         ];
 
         // Format date to DD/MM/YYYY
         function formatDate(dateStr) {
+            if (!dateStr) return 'N/A';
             const date = new Date(dateStr);
             return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
         }
 
         // Render ongoing batches
-        function renderOngoingBatches() {
-            const tbody = document.getElementById('ongoingBatches');
+        function renderBatches() {
+            const tbody = document.getElementById('ongoingBatchesTable');
             tbody.innerHTML = '';
-            ongoingBatches.forEach(batch => {
+            batches.forEach(batch => {
                 tbody.innerHTML += `
                     <tr>
                         <td class="batch-id">${batch.id}</td>
-                        <td class="medicine-name">${batch.medicine}</td>
-                        <td>${formatDate(batch.startDate)}</td>
-                        <td>${formatDate(batch.eta)}</td>
-                        <td class="status ${batch.status.toLowerCase()}">${batch.status}</td>
+                        <td class="product">${batch.product}</td>
                         <td>${batch.quantity}</td>
-                        <td>
-                            <button class="btn-complete" onclick="markComplete('${batch.id}')" ${batch.status === 'Completed' ? 'disabled' : ''}>
-                                Mark as Completed
-                            </button>
+                        <td>${batch.status}</td>
+                        <td>${formatDate(batch.startDate)}</td>
+                        <td>${formatDate(batch.expectedCompletion)}</td>
+                        <td class="actions">
+                            <div>
+                                <button class="btn-action" onclick="openUpdateModal('${batch.id}')">Update</button>
+                                <button class="btn-action" onclick="showBatchHistory('${batch.id}')">History</button>
+                            </div>
                         </td>
                     </tr>
                 `;
             });
         }
 
-        // Render history batches
-        function renderHistoryBatches(filteredBatches = historyBatches) {
-            const tbody = document.getElementById('historyBatches');
-            tbody.innerHTML = '';
-            filteredBatches.forEach(batch => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td class="batch-id">${batch.id}</td>
-                        <td class="medicine-name">${batch.medicine}</td>
-                        <td>${formatDate(batch.startDate)}</td>
-                        <td>${formatDate(batch.eta)}</td>
-                        <td class="status ${batch.status.toLowerCase()}">${batch.status}</td>
-                        <td>${batch.quantity}</td>
-                    </tr>
-                `;
-            });
-        }
-
-        // Create new batch
-        document.getElementById('productionForm').addEventListener('submit', (e) => {
+        // Add new batch
+        document.getElementById('batchForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const medicine = document.getElementById('medicine').value;
-            const quantity = document.getElementById('quantity').value;
+            const product = document.getElementById('productName').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
             const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-            const staff = document.getElementById('staff').value;
+            const expectedCompletion = document.getElementById('expectedCompletion').value;
+            const status = document.getElementById('status').value;
 
-            if (new Date(startDate) > new Date(endDate)) {
-                alert('End date must be after start date');
+            if (quantity <= 0) {
+                alert('Quantity must be positive');
+                return;
+            }
+            if (new Date(startDate) > new Date(expectedCompletion)) {
+                alert('Expected completion must be after start date');
                 return;
             }
 
-            const batchId = `B${(ongoingBatches.length + historyBatches.length + 1).toString().padStart(3, '0')}`;
-            ongoingBatches.push({
-                id: batchId,
-                medicine,
+            const id = `B${(batches.length + 1).toString().padStart(3, '0')}`;
+            batches.push({
+                id,
+                product,
+                quantity,
+                status,
                 startDate,
-                eta: endDate,
-                status: 'In-progress',
-                quantity: parseInt(quantity)
+                expectedCompletion,
+                history: []
             });
 
-            renderOngoingBatches();
-            alert(`Batch ${batchId} created for ${medicine}`);
+            renderBatches();
+            alert(`Batch ${id} added`);
             e.target.reset();
         });
 
-        // Mark batch as completed
-        function markComplete(batchId) {
-            const batch = ongoingBatches.find(b => b.id === batchId);
+        // Open update modal
+        function openUpdateModal(id) {
+            const batch = batches.find(b => b.id === id);
             if (batch) {
-                batch.status = 'Completed';
-                ongoingBatches = ongoingBatches.filter(b => b.id !== batchId);
-                historyBatches.push(batch);
-                renderOngoingBatches();
-                renderHistoryBatches();
-                alert(`Batch ${batchId} marked as completed. Stock updated for ${batch.medicine} (+${batch.quantity}).`);
+                document.getElementById('updateBatchId').value = batch.id;
+                document.getElementById('updateQuantity').value = batch.quantity;
+                document.getElementById('updateStatus').value = batch.status;
+                document.getElementById('updateNotes').value = '';
+                document.getElementById('updateBatchForm').dataset.batchId = id;
+                new bootstrap.Modal(document.getElementById('updateBatchModal')).show();
             }
         }
 
-        // Filter history batches
-        function filterHistory() {
-            const startDate = document.getElementById('filterStartDate').value;
-            const endDate = document.getElementById('filterEndDate').value;
-            const medicine = document.getElementById('filterMedicine').value;
-            const status = document.getElementById('filterStatus').value;
+        // Handle update submission
+        document.getElementById('updateBatchForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = e.target.dataset.batchId;
+            const quantity = parseInt(document.getElementById('updateQuantity').value);
+            const status = document.getElementById('updateStatus').value;
+            const notes = document.getElementById('updateNotes').value;
 
-            let filteredBatches = historyBatches;
-
-            if (startDate) {
-                filteredBatches = filteredBatches.filter(b => new Date(b.startDate) >= new Date(startDate));
-            }
-            if (endDate) {
-                filteredBatches = filteredBatches.filter(b => new Date(b.eta) <= new Date(endDate));
-            }
-            if (medicine) {
-                filteredBatches = filteredBatches.filter(b => b.medicine === medicine);
-            }
-            if (status) {
-                filteredBatches = filteredBatches.filter(b => b.status === status);
+            if (quantity <= 0) {
+                alert('Quantity must be positive');
+                return;
             }
 
-            renderHistoryBatches(filteredBatches);
+            const batch = batches.find(b => b.id === id);
+            if (batch) {
+                batch.quantity = quantity;
+                batch.status = status;
+                batch.history.push({
+                    date: new Date().to,
+                    status,
+                    quantity,
+                    notes: notes || 'N/A'
+                });
+
+                renderBatches();
+                alert(`Batch ${id} updated`);
+                bootstrap.Modal.getInstance(document.getElementById('updateBatchModal')).hide();
+            }
+        });
+
+        // Show batch history
+        function showBatchHistory(id) {
+            const batch = batches.find(b => b.id === id);
+            if (batch) {
+                const tbody = document.getElementById('batchHistoryTable');
+                tbody.innerHTML = '';
+                batch.history.forEach(entry => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${formatDate(entry.date)}</td>
+                            <td>${entry.status}</td>
+                            <td>${entry.quantity}</td>
+                            <td>${entry.notes}</td>
+                        </tr>
+                    `;
+                });
+                document.getElementById('batchHistoryModalLabel').textContent = `History for Batch ${batch.id}`;
+                new bootstrap.Modal(document.getElementById('batchHistoryModal')).show();
+            }
         }
-
-        // Attach filter event listeners
-        document.getElementById('filterStartDate').addEventListener('change', filterHistory);
-        document.getElementById('filterEndDate').addEventListener('change', filterHistory);
-        document.getElementById('filterMedicine').addEventListener('change', filterHistory);
-        document.getElementById('filterStatus').addEventListener('change', filterHistory);
 
         // Initial render
-        renderOngoingBatches();
-        renderHistoryBatches();
+        renderBatches();
     </script>
 </body>
 </html>

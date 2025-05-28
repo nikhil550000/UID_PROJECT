@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaCo - Orders</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #047857;
+            --secondary-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0ea5e9;
+            --background-color: #ecfdf5;
+            --card-bg: #fefce8;
+            --card-secondary-bg: #d4f4e2;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --neon-glow: #6ee7b7;
+            --card-border: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, var(--background-color), #047857);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            width: 260px;
+            background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
+            box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 1rem;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--card-border);
+        }
+        .sidebar-header img {
+            max-width: 150px;
+            height: auto;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar-header img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px var(--neon-glow);
+        }
+        .sidebar-nav {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+        .sidebar-item {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        .sidebar-item:hover {
+            background-color: var(--card-secondary-bg);
+            color: var(--primary-color);
+            transform: translateX(-5px);
+            box-shadow: 0 0 10px var(--neon-glow);
+            text-decoration: none;
+        }
+        .sidebar-item.active {
+            background: linear-gradient(to right, var(--card-secondary-bg), var(--neon-glow));
+            color: var(--text-primary);
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
+        }
+        .sidebar-item i {
+            width: 25px;
+            font-size: 1.1rem;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            text-shadow: 0 0 10px var(--neon-glow);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+            transform: translateX(-50%);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-right: 260px;
+            padding: 2rem;
+        }
+
+        /* Futuristic Card Styling */
+        .futuristic-card {
+            background: linear-gradient(145deg, var(--card-bg), var(--card-secondary-bg));
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .futuristic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+            opacity: 0.8;
+        }
+        .futuristic-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 15px var(--neon-glow);
+        }
+
+        /* Orders Table */
+        .orders-table {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .orders-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .orders-table th, .orders-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .orders-table th {
+            background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+            color: white;
+            font-weight: 600;
+        }
+        .orders-table tr:hover {
+            background: var(--card-secondary-bg);
+            cursor: pointer;
+        }
+        .orders-table .badge {
+            font-size: 0.8rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+        .orders-table .edit-btn {
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .orders-table .edit-btn:hover {
+            color: var(--primary-color);
+        }
+
+        /* Filter Buttons */
+        .filter-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: linear-gradient(45deg, var(--primary-color), var(--info-color));
+            color: white;
+            box-shadow: 0 0 15px var(--neon-glow);
+        }
+
+        /* Update Form */
+        .update-form {
+            display: none;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .update-form.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .update-form .form-control {
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            background: var(--card-secondary-bg);
+        }
+        .update-form .btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--info-color));
+            border: none;
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .update-form .btn:hover {
+            box-shadow: 0 0 15px var(--neon-glow);
+        }
+
+        /* Add Medicine Form */
+        .add-medicine-form {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--card-secondary-bg);
+            border-radius: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+            }
+            .sidebar-header img, .sidebar-item span {
+                display: none;
+            }
+            .main-content {
+                margin-right: 80px;
+            }
+            .sidebar-item i {
+                width: 100%;
+                text-align: center;
+            }
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 220px;
+                right: -220px;
+                padding: 1rem;
+            }
+            .sidebar.show {
+                right: 0;
+            }
+            .main-content {
+                margin-right: 0;
+            }
+            .orders-table {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="logo.png" alt="PharmaCo Logo">
+        </div>
+        <nav class="sidebar-nav">
+            <a href="home.html" class="sidebar-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="medicine-list.html" class="sidebar-item">
+                <i class="fas fa-pills"></i>
+                <span>Medicine List</span>
+            </a>
+            <a href="dashboards.html" class="sidebar-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboards</span>
+            </a>
+            <a href="tables.html" class="sidebar-item">
+                <i class="fas fa-table"></i>
+                <span>Tables</span>
+            </a>
+            <a href="production.html" class="sidebar-item">
+                <i class="fas fa-industry"></i>
+                <span>Production</span>
+            </a>
+            <a href="raw-materials.html" class="sidebar-item">
+                <i class="fas fa-warehouse"></i>
+                <span>Raw Materials</span>
+            </a>
+            <a href="manage-users.html" class="sidebar-item">
+                <i class="fas fa-users"></i>
+                <span>Manage Users</span>
+            </a>
+            <a href="update.html" class="sidebar-item">
+                <i class="fas fa-edit"></i>
+                <span>Update</span>
+            </a>
+            <a href="orders.html" class="sidebar-item active">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Orders</span>
+            </a>
+            <a href="contact.html" class="sidebar-item">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+            <a href="index.html" class="sidebar-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Orders Section -->
+        <section class="container my-5">
+            <h2 class="section-title text-center mb-4">Orders Management</h2>
+            <div class="futuristic-card p-4">
+                <!-- Filter Buttons -->
+                <div class="d-flex justify-content-center mb-4">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="Pending">Pending</button>
+                    <button class="filter-btn" data-filter="Delivered">Delivered</button>
+                    <button class="filter-btn" data-filter="Cancelled">Cancelled</button>
+                </div>
+                <!-- Orders Table -->
+                <div class="orders-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Shop Name</th>
+                                <th>Order Date</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-order-id="1">
+                                <td>1</td>
+                                <td>HealthMart</td>
+                                <td>2025-05-20</td>
+                                <td>$1500.00</td>
+                                <td><span class="badge bg-warning text-dark">Pending</span></td>
+                                <td><i class="fas fa-edit text-info edit-btn"></i></td>
+                            </tr>
+                            <tr data-order-id="2">
+                                <td>2</td>
+                                <td>GreenPharmacy</td>
+                                <td>2025-05-18</td>
+                                <td>$2300.50</td>
+                                <td><span class="badge bg-success">Delivered</span></td>
+                                <td><i class="fas fa-edit text-info edit-btn"></i></td>
+                            </tr>
+                            <tr data-order-id="3">
+                                <td>3</td>
+                                <td>MediCare</td>
+                                <td>2025-05-15</td>
+                                <td>$800.00</td>
+                                <td><span class="badge bg-danger">Cancelled</span></td>
+                                <td><i class="fas fa-edit text-info edit-btn"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Update Form (Separate from Table) -->
+            <div class="update-form futuristic-card" id="update-form">
+                <h5 class="mb-3">Update Order</h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="update-order-id" class="form-label">Order ID</label>
+                        <input type="text" class="form-control" id="update-order-id" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="update-shop-name" class="form-label">Shop Name</label>
+                        <input type="text" class="form-control" id="update-shop-name">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="update-order-date" class="form-label">Order Date</label>
+                        <input type="date" class="form-control" id="update-order-date">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="update-total-amount" class="form-label">Total Amount</label>
+                        <input type="number" step="0.01" class="form-control" id="update-total-amount">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="update-status" class="form-label">Status</label>
+                        <select class="form-control" id="update-status">
+                            <option value="Pending">Pending</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+                <h6 class="mt-4">Order Items</h6>
+                <div class="orders-table mb-3">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Medicine ID</th>
+                                <th>Medicine Name</th>
+                                <th>Quantity</th>
+                                <th>Price Each</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="update-order-items">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="add-medicine-form">
+                    <h6>Add Medicine</h6>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="add-medicine-name" class="form-label">Medicine</label>
+                            <select class="form-control" id="add-medicine-name">
+                                <option value="" disabled selected>Select Medicine</option>
+                                <option value="Paracetamol 500mg">Paracetamol 500mg</option>
+                                <option value="Amoxicillin 250mg">Amoxicillin 250mg</option>
+                                <option value="Ibuprofen 400mg">Ibuprofen 400mg</option>
+                                <option value="Omeprazole">Omeprazole</option>
+                                <option value="Metformin">Metformin</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="add-quantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="add-quantity" min="1">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="add-price" class="form-label">Price Each</label>
+                            <input type="number" step="0.01" class="form-control" id="add-price" min="0">
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button class="btn w-100" onclick="addMedicine()">Add</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn mt-3" onclick="saveOrder()">Save Changes</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sidebar scroll behavior
+        window.addEventListener('scroll', () => {
+            const sidebar = document.getElementById('sidebar');
+            const scrollPosition = window.scrollY;
+            if (scrollPosition > 50) {
+                sidebar.classList.add('show');
+            } else {
+                sidebar.classList.remove('show');
+            }
+        });
+
+        // Sidebar navigation
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                if (window.innerWidth < 768) {
+                    document.getElementById('sidebar').classList.remove('show');
+                }
+            });
+        });
+
+        // Set active state based on current page
+        const currentPath = window.location.pathname.split('/').pop() || 'orders.html';
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            if (item.getAttribute('href') === currentPath) {
+                item.classList.add('active');
+            }
+        });
+
+        // Filter orders
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const orderRows = document.querySelectorAll('.orders-table tbody tr');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filter = button.getAttribute('data-filter');
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                orderRows.forEach(row => {
+                    const status = row.querySelector('.badge').textContent;
+                    if (filter === 'all' || status === filter) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Mock order items data
+        const orderItemsData = {
+            1: [
+                { medicine_id: 101, name: "Paracetamol 500mg", quantity: 50, price_each: 20.00 },
+                { medicine_id: 102, name: "Amoxicillin 250mg", quantity: 25, price_each: 40.00 }
+            ],
+            2: [
+                { medicine_id: 103, name: "Ibuprofen 400mg", quantity: 30, price_each: 50.00 },
+                { medicine_id: 104, name: "Omeprazole", quantity: 20, price_each: 40.00 }
+            ],
+            3: [
+                { medicine_id: 105, name: "Metformin", quantity: 100, price_each: 8.00 }
+            ]
+        };
+
+        // Available medicines for adding
+        const availableMedicines = [
+            { id: 101, name: "Paracetamol 500mg" },
+            { id: 102, name: "Amoxicillin 250mg" },
+            { id: 103, name: "Ibuprofen 400mg" },
+            { id: 104, name: "Omeprazole" },
+            { id: 105, name: "Metformin" }
+        ];
+
+        // Populate update form on edit button click
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const row = e.target.closest('tr');
+                const orderId = row.getAttribute('data-order-id');
+                const shopName = row.cells[1].textContent;
+                const orderDate = row.cells[2].textContent;
+                const totalAmount = row.cells[3].textContent.replace('$', '');
+                const status = row.cells[4].textContent;
+
+                const updateForm = document.getElementById('update-form');
+                updateForm.style.display = 'none';
+                updateForm.classList.remove('show');
+
+                document.getElementById('update-order-id').value = orderId;
+                document.getElementById('update-shop-name').value = shopName;
+                document.getElementById('update-order-date').value = orderDate;
+                document.getElementById('update-total-amount').value = totalAmount;
+                document.getElementById('update-status').value = status;
+
+                const orderItems = orderItemsData[orderId] || [];
+                const itemsTableBody = document.getElementById('update-order-items');
+                itemsTableBody.innerHTML = '';
+                orderItems.forEach(item => {
+                    const total = (item.quantity * item.price_each).toFixed(2);
+                    itemsTableBody.innerHTML += `
+                        <tr>
+                            <td>${item.medicine_id}</td>
+                            <td>${item.name}</td>
+                            <td><input type="number" class="form-control" value="${item.quantity}" data-medicine-id="${item.medicine_id}"></td>
+                            <td><input type="number" step="0.01" class="form-control" value="${item.price_each.toFixed(2)}" data-medicine-id="${item.medicine_id}"></td>
+                            <td>$${total}</td>
+                        </tr>
+                    `;
+                });
+
+                updateForm.style.display = 'block';
+                setTimeout(() => {
+                    updateForm.classList.add('show');
+                    updateForm.scrollIntoView({ behavior: 'smooth' });
+                }, 10);
+            });
+        });
+
+        // Add medicine to order
+        function addMedicine() {
+            const medicineName = document.getElementById('add-medicine-name').value;
+            const quantity = parseInt(document.getElementById('add-quantity').value);
+            const priceEach = parseFloat(document.getElementById('add-price').value);
+            const orderId = document.getElementById('update-order-id').value;
+
+            if (!medicineName || isNaN(quantity) || quantity < 1 || isNaN(priceEach) || priceEach <= 0) {
+                alert('Please select a medicine, enter a valid quantity, and price.');
+                return;
+            }
+
+            const medicine = availableMedicines.find(m => m.name === medicineName);
+            if (!medicine) {
+                alert('Invalid medicine selected.');
+                return;
+            }
+
+            if (!orderItemsData[orderId]) {
+                orderItemsData[orderId] = [];
+            }
+
+            const existingItem = orderItemsData[orderId].find(item => m.name === medicineName);
+            if (existingItem){
+                alert('This medicine is already in the order.')
+                return;
+            }
+
+            const newItem = {
+                medicine_id: medicine.id,
+                name: medicineName,
+                quantity: quantity,
+                price_each: priceEach
+            };
+            orderItemsData[orderId].push(newItem);
+
+            const itemsTableBody = document.getElementById('update-order-items');
+            const total = (quantity * priceEach).toFixed(2);
+            itemsTableBody.innerHTML += `
+                <tr>
+                    <td>${medicine.id}</td>
+                    <td>${medicineName}</td>
+                    <td><input type="number" class="form-control" value="${quantity}" data-medicine-id="${medicine.id}"></td>
+                    <td><input type="number" step="0.01" class="form-control" value="${priceEach.toFixed(2)}" data-medicine-id="${medicine.id}"></td>
+                    <td>$${total}</td>
+                </tr>
+            `;
+
+            // Clear add medicine form
+            document.getElementById('add-medicine-name').value = '';
+            document.getElementById('add-quantity').value = '';
+            document.getElementById('add-price').value = '';
+
+            // Update total amount
+            updateTotalAmount(orderId);
+        }
+
+        // Update total amount
+        function updateTotalAmount(orderId) {
+            const totalAmountInput = document.getElementById('update-total-amount');
+            const items = orderItemsData[orderId] || [];
+            const total = items.reduce((sum, item) => sum + (item.quantity * item.price_each), 0);
+            totalAmountInput.value = total.toFixed(2);
+        }
+
+        // Save order changes
+        function saveOrder() {
+            const orderId = document.getElementById('update-order-id').value;
+            const shopName = document.getElementById('update-shop-name').value;
+            const orderDate = document.getElementById('update-order-date').value;
+            const totalAmount = document.getElementById('update-total-amount').value;
+            const status = document.getElementById('update-status').value;
+
+            const itemRows = document.querySelectorAll('#update-order-items tr');
+            itemRows.forEach(row => {
+                const medicineId = parseInt(row.querySelector('input[data-medicine-id]').getAttribute('data-medicine-id'));
+                const quantity = parseInt(row.querySelector('input[type="number"]').value);
+                const priceEach = parseFloat(row.querySelector('input[step="0.01"]').value);
+                orderItemsData[orderId].forEach(item => {
+                    if (item.medicine_id === medicineId) {
+                        item.quantity = quantity;
+                        item.price_each = priceEach;
+                    }
+                });
+            });
+
+            const row = document.querySelector(`tr[data-order-id="${orderId}"]`);
+            row.cells[1].textContent = shopName;
+            row.cells[2].textContent = orderDate;
+            row.cells[3].textContent = `$${parseFloat(totalAmount).toFixed(2)}`;
+            row.cells[4].innerHTML = `<span class="badge bg-${
+                status === 'Pending' ? 'warning text-dark' : status === 'Delivered' ? 'success' : 'danger'
+            }">${status}</span>`;
+
+            const form = document.getElementById('update-form');
+            form.classList.remove('show');
+            setTimeout(() => {
+                form.style.display = 'none';
+            }, 500);
+        }
+    </script>
+</body>
+</html>

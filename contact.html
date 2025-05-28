@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PharmaCo - Contact Details</title>
+    <title>PharmaCo - Contact</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome for icons -->
@@ -41,37 +41,43 @@
             right: 0;
             top: 0;
             height: 100vh;
-            width: 260px;
+            width: 250px;
             background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
             box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
-            padding: 2rem 1.5rem;
+            padding: 1.5rem 1rem;
             z-index: 100;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
-
         .sidebar-header {
             text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--card-border);
         }
-
         .sidebar-header h2 {
             color: var(--primary-color);
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin: 0;
         }
-
+        .sidebar-nav {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.4rem;
+        }
         .sidebar-item {
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.75rem;
+            padding: 0.5rem 1rem;
             border-radius: 8px;
             color: var(--text-secondary);
             display: flex;
             align-items: center;
             transition: all 0.3s ease;
             text-decoration: none;
+            font-size: 1rem;
         }
-
         .sidebar-item:hover {
             background-color: var(--card-secondary-bg);
             color: var(--primary-color);
@@ -79,22 +85,20 @@
             box-shadow: 0 0 10px var(--neon-glow);
             text-decoration: none;
         }
-
         .sidebar-item.active {
             background: linear-gradient(to right, var(--card-secondary-bg), var(--neon-glow));
             color: var(--text-primary);
             font-weight: 600;
             box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
         }
-
         .sidebar-item i {
-            width: 30px;
-            font-size: 1.2rem;
+            width: 25px;
+            font-size: 1.1rem;
         }
 
         /* Main Content */
         .main-content {
-            margin-right: 260px;
+            margin-right: 250px;
             padding: 2rem;
         }
 
@@ -226,54 +230,91 @@
             color: var(--danger-color);
             margin-left: 4px;
         }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+            }
+            .sidebar-header h2, .sidebar-item span {
+                display: none;
+            }
+            .main-content {
+                margin-right: 80px;
+            }
+            .sidebar-item i {
+                width: 100%;
+                text-align: center;
+            }
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 250px;
+                right: -250px;
+                padding: 1rem;
+            }
+            .sidebar.show {
+                right: 0;
+            }
+            .main-content {
+                margin-right: 0;
+                padding: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Sidebar Navigation -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h2>PharmaCo</h2>
         </div>
-        <a href="home.html" class="sidebar-item">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="medicine-list.html" class="sidebar-item">
-            <i class="fas fa-pills"></i>
-            <span>Medicine List</span>
-        </a>
-        <a href="dashboards.html" class="sidebar-item">
-            <i class="fas fa-chart-line"></i>
-            <span>Dashboards</span>
-        </a>
-        <a href="tables.html" class="sidebar-item">
-            <i class="fas fa-table"></i>
-            <span>Tables</span>
-        </a>
-        <a href="production.html" class="sidebar-item">
-            <i class="fas fa-industry"></i>
-            <span>Production</span>
-        </a>
-        <a href="raw-materials.html" class="sidebar-item ">
-            <i class="fas fa-warehouse"></i>
-            <span>Raw Materials</span>
-        </a>
-        <a href="manage-users.html" class="sidebar-item ">
-            <i class="fas fa-users"></i>
-            <span>Manage Users</span>
-        </a>
-        <a href="update.html" class="sidebar-item">
-            <i class="fas fa-edit"></i>
-            <span>Update</span>
-        </a>
-        <a href="contact.html" class="sidebar-item active">
-            <i class="fas fa-address-book"></i>
-            <span>Contact Details</span>
-        </a>
-        <a href="index.html" class="sidebar-item">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
-        </a>
+        <nav class="sidebar-nav">
+            <a href="home.html" class="sidebar-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="medicine-list.html" class="sidebar-item">
+                <i class="fas fa-pills"></i>
+                <span>Medicine List</span>
+            </a>
+            <a href="dashboards.html" class="sidebar-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboards</span>
+            </a>
+            <a href="tables.html" class="sidebar-item">
+                <i class="fas fa-table"></i>
+                <span>Tables</span>
+            </a>
+            <a href="production.html" class="sidebar-item">
+                <i class="fas fa-industry"></i>
+                <span>Production</span>
+            </a>
+            <a href="raw-materials.html" class="sidebar-item">
+                <i class="fas fa-warehouse"></i>
+                <span>Raw Materials</span>
+            </a>
+            <a href="manage-users.html" class="sidebar-item">
+                <i class="fas fa-users"></i>
+                <span>Manage Users</span>
+            </a>
+            <a href="update.html" class="sidebar-item">
+                <i class="fas fa-edit"></i>
+                <span>Update</span>
+            </a>
+            <a href="orders.html" class="sidebar-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Orders</span>
+            </a>
+            <a href="contact.html" class="sidebar-item active">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+            <a href="index.html" class="sidebar-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </nav>
     </div>
 
     <!-- Main Content -->
@@ -286,7 +327,7 @@
                         <i class="fas fa-map-marker-alt"></i>
                         <div class="contact-info-content">
                             <h4>Address</h4>
-                            <p>123 Pharma Street, Medical District<br>Mumbai, Maharashtra 400001</p>
+                            <p>123 MediChem Avenue, HealthTech Park<br>Mumbai, Maharashtra 400001,India</p>
                         </div>
                     </div>
                     <div class="contact-info">
@@ -350,6 +391,36 @@
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Sidebar scroll behavior
+        window.addEventListener('scroll', () => {
+            const sidebar = document.getElementById('sidebar');
+            const scrollPosition = window.scrollY;
+            if (scrollPosition > 50) {
+                sidebar.classList.add('show');
+            } else {
+                sidebar.classList.remove('show');
+            }
+        });
+
+        // Sidebar navigation
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                if (window.innerWidth < 768) {
+                    document.getElementById('sidebar').classList.remove('show');
+                }
+            });
+        });
+
+        // Set active state based on current page
+        const currentPath = window.location.pathname.split('/').pop() || 'contact.html';
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            if (item.getAttribute('href') === currentPath) {
+                item.classList.add('active');
+            }
+        });
+
         // Form submission handling
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -380,4 +451,4 @@
         });
     </script>
 </body>
-</html> 
+</html>

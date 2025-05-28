@@ -46,34 +46,46 @@
             width: 260px;
             background: linear-gradient(180deg, var(--card-bg), var(--card-secondary-bg));
             box-shadow: -6px 0 20px rgba(0, 0, 0, 0.1);
-            padding: 2rem 1.5rem;
+            padding: 1.5rem 1rem;
             z-index: 100;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
-
         .sidebar-header {
             text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--card-border);
         }
-
-        .sidebar-header h2 {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin: 0;
+        .sidebar-header img {
+            max-width: 150px;
+            height: auto;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-
+        .sidebar-header img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px var(--neon-glow);
+        }
+        .sidebar-nav {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.4rem;
+        }
         .sidebar-item {
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.75rem;
+            padding: 0.5rem 1rem;
             border-radius: 8px;
             color: var(--text-secondary);
             display: flex;
             align-items: center;
             transition: all 0.3s ease;
             text-decoration: none;
+            font-size: 1rem;
         }
-
         .sidebar-item:hover {
             background-color: var(--card-secondary-bg);
             color: var(--primary-color);
@@ -81,17 +93,15 @@
             box-shadow: 0 0 10px var(--neon-glow);
             text-decoration: none;
         }
-
         .sidebar-item.active {
             background: linear-gradient(to right, var(--card-secondary-bg), var(--neon-glow));
             color: var(--text-primary);
             font-weight: 600;
             box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
         }
-
         .sidebar-item i {
-            width: 30px;
-            font-size: 1.2rem;
+            width: 25px;
+            font-size: 1.1rem;
         }
 
         /* Main Content */
@@ -100,6 +110,7 @@
             padding: 2rem;
         }
 
+        /* Dashboard Header */
         .dashboard-header {
             background: linear-gradient(145deg, var(--card-bg), var(--card-secondary-bg));
             border: 1px solid var(--card-border);
@@ -109,6 +120,7 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         }
 
+        /* Metric Card */
         .metric-card {
             background: linear-gradient(145deg, var(--card-bg), var(--card-secondary-bg));
             border: 1px solid var(--card-border);
@@ -117,38 +129,20 @@
             margin-bottom: 1rem;
             transition: all 0.3s ease;
         }
-
         .metric-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
-
-        .chart-container {
-            background: linear-gradient(145deg, var(--card-bg), var(--card-secondary-bg));
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .chart-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-
         .metric-value {
             font-size: 2rem;
             font-weight: 700;
             color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
-
         .metric-label {
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
-
         .trend-indicator {
             display: inline-flex;
             align-items: center;
@@ -158,64 +152,112 @@
             font-weight: 500;
             margin-left: 1rem;
         }
-
         .trend-up {
             background-color: var(--secondary-color);
             color: white;
         }
-
         .trend-down {
             background-color: var(--danger-color);
             color: white;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: linear-gradient(145deg, var(--card-bg), var(--card-secondary-bg));
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        .chart-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+            }
+            .sidebar-header img, .sidebar-item span {
+                display: none;
+            }
+            .main-content {
+                margin-right: 80px;
+            }
+            .sidebar-item i {
+                width: 100%;
+                text-align: center;
+            }
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 220px;
+                right: -220px;
+                padding: 1rem;
+            }
+            .sidebar.show {
+                right: 0;
+            }
+            .main-content {
+                margin-right: 0;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Sidebar Navigation -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h2>PharmaCo</h2>
+            <img src="logo.png" alt="PharmaCo Logo">
         </div>
-        <a href="home.html" class="sidebar-item">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="medicine-list.html" class="sidebar-item">
-            <i class="fas fa-pills"></i>
-            <span>Medicine List</span>
-        </a>
-        <a href="dashboards.html" class="sidebar-item active">
-            <i class="fas fa-chart-line"></i>
-            <span>Dashboards</span>
-        </a>
-        <a href="tables.html" class="sidebar-item">
-            <i class="fas fa-table"></i>
-            <span>Tables</span>
-        </a>
-        <a href="production.html" class="sidebar-item">
-            <i class="fas fa-industry"></i>
-            <span>Production</span>
-        </a>
-        <a href="raw-materials.html" class="sidebar-item ">
-            <i class="fas fa-warehouse"></i>
-            <span>Raw Materials</span>
-        </a>
-        <a href="manage-users.html" class="sidebar-item ">
-            <i class="fas fa-users"></i>
-            <span>Manage Users</span>
-        </a>
-        <a href="update.html" class="sidebar-item">
-            <i class="fas fa-edit"></i>
-            <span>Update</span>
-        </a>
-        <a href="contact.html" class="sidebar-item">
-            <i class="fas fa-address-book"></i>
-            <span>Contact Details</span>
-        </a>
-        <a href="index.html" class="sidebar-item">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
-        </a>
+        <nav class="sidebar-nav">
+            <a href="home.html" class="sidebar-item">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="medicine-list.html" class="sidebar-item">
+                <i class="fas fa-pills"></i>
+                <span>Medicine List</span>
+            </a>
+            <a href="dashboards.html" class="sidebar-item active">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboards</span>
+            </a>
+            <a href="tables.html" class="sidebar-item">
+                <i class="fas fa-table"></i>
+                <span>Tables</span>
+            </a>
+            <a href="production.html" class="sidebar-item">
+                <i class="fas fa-industry"></i>
+                <span>Production</span>
+            </a>
+            <a href="raw-materials.html" class="sidebar-item">
+                <i class="fas fa-warehouse"></i>
+                <span>Raw Materials</span>
+            </a>
+            <a href="manage-users.html" class="sidebar-item">
+                <i class="fas fa-users"></i>
+                <span>Manage Users</span>
+            </a>
+            <a href="update.html" class="sidebar-item">
+                <i class="fas fa-edit"></i>
+                <span>Update</span>
+            </a>
+            <a href="orders.html" class="sidebar-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Orders</span>
+            </a>
+            <a href="contact.html" class="sidebar-item">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+            <a href="index.html" class="sidebar-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </nav>
     </div>
 
     <!-- Main Content -->
@@ -331,6 +373,17 @@
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Sidebar scroll behavior
+        window.addEventListener('scroll', () => {
+            const sidebar = document.getElementById('sidebar');
+            const scrollPosition = window.scrollY;
+            if (scrollPosition > 50) {
+                sidebar.classList.add('show');
+            } else {
+                sidebar.classList.remove('show');
+            }
+        });
+
         // Sales Overview Chart
         const salesCtx = document.getElementById('salesChart').getContext('2d');
         new Chart(salesCtx, {
@@ -426,13 +479,13 @@
             data: {
                 labels: ['Delivery Time', 'Quality', 'Price', 'Communication', 'Reliability'],
                 datasets: [{
-                    label: 'MedSupply Co.',
+                    label: 'MediChem Solutions',
                     data: [90, 85, 80, 95, 88],
                     backgroundColor: 'rgba(4, 120, 87, 0.2)',
                     borderColor: '#047857',
                     pointBackgroundColor: '#047857'
                 }, {
-                    label: 'PharmaTech Ltd.',
+                    label: 'PharmaSynth Labs',
                     data: [85, 90, 85, 80, 92],
                     backgroundColor: 'rgba(16, 185, 129, 0.2)',
                     borderColor: '#10b981',
@@ -451,4 +504,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
